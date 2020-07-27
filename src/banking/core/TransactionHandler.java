@@ -1,5 +1,8 @@
 package banking.core;
 
-public class TransactionHandler {
+import banking.model.Transaction;
+
+public class TransactionHandler
+{
 
 }
