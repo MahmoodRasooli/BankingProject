@@ -1,5 +1,6 @@
 package banking.core;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,38 +10,31 @@ import java.util.Scanner;
 
 // The main class to handle IO operations
 public class FileHandler {
+    private static final String _clientFileName = "Client.json";
+    private static final String _employeeFileName = "Employee.json";
+    private static final String _accountFileName = "Account.json";
+    private static final String _transactionFileName = "Transaction.json";
+    private static final String _accountRequstFileName = "AccountRequest.json";
+    private static final String __transactionRequestFileName = "TransactionRequest.json";
 
     // Creates the necessary files if needed.
     public static boolean initiateFiles(StringBuilder errorMessage) {
 
-        File file = new File("file.JSON");
+        File clientFile = new File(_clientFileName);
 
-        try{
-
-            // Account.json
-            // Client.Json
-            // ...
-            //Json
-            if(file.createNewFile()) {
-                System.out.println("File successfully created");
-                return true;
-            }
-            else {
-                System.out.println("File exists");
-                return false;
-            }
+        try {
+            clientFile.createNewFile();
+            return true;
         }
         catch (Exception ex){
             errorMessage.append("Error in initiating files.");
             return  false;
         }
-
-        //return false;
     }
 
-    public static void writeToFiles(Object object) {
+    public static void writeToFile(Object object, EntityType type) {
         try {
-            FileWriter fileWriter = new FileWriter("file.JSON");
+            FileWriter fileWriter = new FileWriter(getFileName(type));
             fileWriter.write(object.toString());
             fileWriter.close();
         }
@@ -48,28 +42,27 @@ public class FileHandler {
         }
     }
 
-    public static void writeToFileWithFile(File file) {
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public static void readFile(EntityType entityType){
+        File file = new File(getFileName(entityType));
 
     }
 
-    public static void readFile(){
-        File file = new File("file.JSON");
-        try {
-            Scanner fileReader = new Scanner(file);
-            while (fileReader.hasNext()){
-
-            }
-            fileReader.close();
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
+    private static String getFileName(EntityType fileType){
+        switch (fileType){
+            case Account:
+                return _accountFileName;
+            case AccountRequest:
+                return  _accountRequstFileName;
+            case Client:
+                return _clientFileName;
+            case Employee:
+                return _employeeFileName;
+            case Transaction:
+                return _transactionFileName;
+            case TransactionRequest:
+                return  __transactionRequestFileName;
+            default:
+                return "";
         }
     }
 }
