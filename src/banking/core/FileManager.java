@@ -10,7 +10,7 @@ import java.io.IOException;
 
 
 // The main class to handle IO operations
-public class FileHandler
+public class FileManager
 {
     private static final String _clientFileName = "Client.json";
     private static final String _employeeFileName = "Employee.json";

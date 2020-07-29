@@ -10,7 +10,7 @@ import banking.model.Account;
 import banking.model.AccountStatus;
 import org.json.simple.JSONObject;
 
-public class AccountHandler
+public class AccountManger
 {
     Scanner input = new Scanner(System.in);
 
@@ -82,6 +82,11 @@ public class AccountHandler
     }
 
     public void updateAccount()
+    {
+
+    }
+
+    public void deleteAccount()
     {
 
     }

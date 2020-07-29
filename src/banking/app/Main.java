@@ -1,6 +1,4 @@
 package banking.app;
-import banking.core.FileHandler;
-import org.json.simple.JSONObject;
 
 public class Main {
 
