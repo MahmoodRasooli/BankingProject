@@ -2,11 +2,14 @@ package banking.core;
 
 import org.json.simple.JSONObject;
 
+import banking.model.Transaction;
+
 import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 // The main class to handle IO operations
@@ -20,13 +23,42 @@ public class FileManager
     private static final String __transactionRequestFileName = "TransactionRequest.json";
 
     // Creates the necessary files if needed.
+    public static boolean initiateFiles(StringBuilder errorMessage)
+    {
+        if(!initiateClientFiles(errorMessage))
+            return false;
+
+        if(!initiateEmployeeFiles(errorMessage))
+            return false;
+
+        if(!initiateAccountFiles(errorMessage))
+            return false;
+
+        if(!initiateTransactionFile(errorMessage))
+            return false;
+
+        if(!initiateAccountRequestFiles(errorMessage))
+            return false;
+
+        if(!initiateTransactionRequestFiles(errorMessage))
+            return false;
+
+        if(!initiateAccountFiles(errorMessage))
+            return false;
+
+        return true;
+    }
+
     public static boolean initiateClientFiles(StringBuilder errorMessage)
     {
         File clientFile = new File(_clientFileName);
 
         try
         {
-            clientFile.createNewFile();
+            if(!clientFile.createNewFile()){
+      
+            }
+
             return true;
         }
         catch (Exception ex)
@@ -68,13 +100,20 @@ public class FileManager
         }
     }
 
-    public static boolean initiateTransactionFiles(StringBuilder errorMessage)
+    public static boolean initiateTransactionFile(StringBuilder errorMessage)
     {
         File transactionFile = new File(_transactionFileName);
 
         try
         {
-            transactionFile.createNewFile();
+            if(!transactionFile.createNewFile()) {
+                var data = readFile(EntityType.Transaction);
+
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
             return true;
         }
         catch (Exception ex)
@@ -130,9 +169,10 @@ public class FileManager
         }
     }
 
-    public static void readFile(EntityType entityType)
+    public static String readFile(EntityType entityType)
     {
         File file = new File(getFileName(entityType));
+        return null;
     }
 
     private static String getFileName(EntityType fileType)
