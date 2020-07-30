@@ -152,12 +152,19 @@ public class FileManager
 
         try
         {
-            accountRequestFile.createNewFile();
+            if(!accountRequestFile.createNewFile()) {
+                ArrayList<Transaction> data = readFile(EntityType.Transaction);
+                TransactionManager.fillRepository(data);
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
             return true;
         }
         catch (Exception ex)
         {
-            errorMessage.append("Error in initiating account request file.");
+            errorMessage.append("Error in initiating transaction file.");
             return false;
         }
     }
@@ -168,13 +175,20 @@ public class FileManager
 
         try
         {
-            transactionRequestFile.createNewFile();
+            if(!transactionRequestFile.createNewFile()) {
+                ArrayList<Transaction> data = readFile(EntityType.Transaction);
+                TransactionManager.fillRepository(data);
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
             return true;
         }
         catch (Exception ex)
         {
-            errorMessage.append("Error in initiating transaction request file.");
-            return  false;
+            errorMessage.append("Error in initiating transaction file.");
+            return false;
         }
     }
 
