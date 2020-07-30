@@ -1,6 +1,6 @@
 package banking.model;
 
-public class AccontRequest
+public class AccountRequest
 {
 
 }

@@ -1,12 +1,17 @@
 package banking.core;
 
 import banking.model.Transaction;
+import banking.model.TransactionRequest;
 
 import java.util.ArrayList;
 
 public class TransactionRequestManager
 {
-    ArrayList<Transaction> transactionArrayList = new ArrayList<>();
+    private static ArrayList<TransactionRequest> _repository = new ArrayList<>();
+
+    public static void fillRepository(ArrayList<TransactionRequest> repository) { _repository = repository; }
+
+    public TransactionRequestManager() { super(); }
 
     public void createTransactionRequest()
     {
@@ -23,9 +28,9 @@ public class TransactionRequestManager
 
     }
 
-    public void getAll()
+    public ArrayList<TransactionRequest> getAll()
     {
-
+        return _repository;
     }
 
     public void query()

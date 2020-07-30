@@ -1,24 +1,40 @@
 package banking.core;
 
-<<<<<<< HEAD
-public class ClientManager
-{
-
-}
-=======
 import java.util.ArrayList;
 import java.util.List;
 import banking.model.Client;
 
-public class ClientManager {
-    private static List<Client> _repository = new ArrayList<Client>();   
+public class ClientManager
+{
+    private static ArrayList<Client> _repository = new ArrayList<Client>();
 
-    public ClientManager() {
+    public ClientManager()
+    {
         super();
     }
 
-    public static void fillRepository(List<Client> repository) {
+    public static void fillRepository(ArrayList<Client> repository)
+    {
         _repository = repository;
     }
+
+    public void updateClient()
+    {
+
+    }
+
+    public void search()
+    {
+
+    }
+
+    public ArrayList<Client> getAll()
+    {
+        return _repository;
+    }
+
+    public void query()
+    {
+
+    }
 }
->>>>>>> 591f26a2cf66f22b0e3b1d6c7d1976b138e893db

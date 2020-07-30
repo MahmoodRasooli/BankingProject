@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Account
 {
-    private int balance;
+    private long balance;
     private String type;
     private String accountHolder;
     private int accountNumber;
@@ -33,9 +33,9 @@ public class Account
 
     public void setAccountNumber(int accountNumber) { this.accountNumber = accountNumber; }
 
-    public int getBalance() { return balance; }
+    public long getBalance() { return balance; }
 
-    public void setBalance(int balance) { this.balance = balance; }
+    public void setBalance(long balance) { this.balance = balance; }
 
     public String getType() { return type; }
 

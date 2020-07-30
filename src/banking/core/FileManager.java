@@ -1,15 +1,20 @@
 package banking.core;
 
+import banking.model.Account;
+import com.google.gson.stream.JsonReader;
 import org.json.simple.JSONObject;
-
 import banking.model.Transaction;
-
 import javax.swing.text.html.parser.Entity;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 
 // The main class to handle IO operations
@@ -25,90 +30,39 @@ public class FileManager
     // Creates the necessary files if needed.
     public static boolean initiateFiles(StringBuilder errorMessage)
     {
-        if(!initiateClientFiles(errorMessage))
+        if(!initiateClientFile(errorMessage))
             return false;
 
-        if(!initiateEmployeeFiles(errorMessage))
+        if(!initiateEmployeeFile(errorMessage))
             return false;
 
-        if(!initiateAccountFiles(errorMessage))
+        if(!initiateAccountFile(errorMessage))
             return false;
 
         if(!initiateTransactionFile(errorMessage))
             return false;
 
-        if(!initiateAccountRequestFiles(errorMessage))
+        if(!initiateAccountRequestFile(errorMessage))
             return false;
 
-        if(!initiateTransactionRequestFiles(errorMessage))
+        if(!initiateTransactionRequestFile(errorMessage))
             return false;
 
-        if(!initiateAccountFiles(errorMessage))
+        if(!initiateAccountFile(errorMessage))
             return false;
 
         return true;
     }
 
-    public static boolean initiateClientFiles(StringBuilder errorMessage)
+    public static boolean initiateClientFile(StringBuilder errorMessage)
     {
         File clientFile = new File(_clientFileName);
 
         try
         {
-            if(!clientFile.createNewFile()){
-      
-            }
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating client file.");
-            return false;
-        }
-    }
-
-    public static boolean initiateEmployeeFiles(StringBuilder errorMessage)
-    {
-        File employeeFile = new File(_employeeFileName);
-
-        try
-        {
-            employeeFile.createNewFile();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating employee file.");
-            return false;
-        }
-    }
-
-    public static boolean initiateAccountFiles(StringBuilder errorMessage)
-    {
-        File accountFile = new File(_accountFileName);
-
-        try
-        {
-            accountFile.createNewFile();
-            return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating account file.");
-            return false;
-        }
-    }
-
-    public static boolean initiateTransactionFile(StringBuilder errorMessage)
-    {
-        File transactionFile = new File(_transactionFileName);
-
-        try
-        {
-            if(!transactionFile.createNewFile()) {
-                var data = readFile(EntityType.Transaction);
-
+            if(!clientFile.createNewFile()) {
+                ArrayList<Account> data = readFile(EntityType.Account);
+                AccountManager.fillRepository(data);
             }
             else{
                 TransactionManager.fillRepository(new ArrayList<Transaction>());
@@ -123,7 +77,76 @@ public class FileManager
         }
     }
 
-    public static boolean initiateAccountRequestFiles(StringBuilder errorMessage)
+    public static boolean initiateEmployeeFile(StringBuilder errorMessage)
+    {
+        File employeeFile = new File(_employeeFileName);
+
+        try
+        {
+            if(!employeeFile.createNewFile()) {
+                ArrayList<Account> data = readFile(EntityType.Account);
+                AccountManager.fillRepository(data);
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            errorMessage.append("Error in initiating transaction file.");
+            return false;
+        }
+    }
+
+    public static boolean initiateAccountFile(StringBuilder errorMessage)
+    {
+        File accountFile = new File(_accountFileName);
+
+        try
+        {
+            if(!accountFile.createNewFile()) {
+                ArrayList<Account> data = readFile(EntityType.Account);
+                AccountManager.fillRepository(data);
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            errorMessage.append("Error in initiating transaction file.");
+            return false;
+        }
+    }
+
+    public static boolean initiateTransactionFile(StringBuilder errorMessage)
+    {
+        File transactionFile = new File(_transactionFileName);
+
+        try
+        {
+            if(!transactionFile.createNewFile()) {
+                ArrayList<Transaction> data = readFile(EntityType.Transaction);
+                TransactionManager.fillRepository(data);
+            }
+            else{
+                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            errorMessage.append("Error in initiating transaction file.");
+            return false;
+        }
+    }
+
+    public static boolean initiateAccountRequestFile(StringBuilder errorMessage)
     {
         File accountRequestFile = new File(_accountRequstFileName);
 
@@ -139,7 +162,7 @@ public class FileManager
         }
     }
 
-    public static boolean initiateTransactionRequestFiles(StringBuilder errorMessage)
+    public static boolean initiateTransactionRequestFile(StringBuilder errorMessage)
     {
         File transactionRequestFile = new File(_transactionFileName);
 
@@ -169,10 +192,17 @@ public class FileManager
         }
     }
 
-    public static String readFile(EntityType entityType)
+    public static <E> ArrayList<E> readFile(EntityType entityType)
     {
-        File file = new File(getFileName(entityType));
-        return null;
+        try {
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader(getFileName(entityType)));
+            ArrayList<E> data = gson.fromJson(reader, (new ArrayList<E>()).getClass());
+            return data;
+        }
+        catch (Exception ex) {
+            return  null;
+        }
     }
 
     private static String getFileName(EntityType fileType)

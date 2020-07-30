@@ -2,7 +2,7 @@ package banking.model;
 
 public enum role
 {
-    bإankManager,
+    bankManager,
     bankEmployee,
     bankClient
 }

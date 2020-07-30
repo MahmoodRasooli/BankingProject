@@ -1,17 +1,24 @@
 package banking.core;
 
-import banking.model.AccontRequest;
+import banking.model.AccountRequest;
 
 import java.util.ArrayList;
 
-public class AccountRequestManager {
-    ArrayList<AccontRequest> accontRequestArrayList = new ArrayList<>();
+public class AccountRequestManager
+{
+    private static ArrayList<AccountRequest> _repository = new ArrayList<>();
 
-    public void createAccountRequest() {
+    public static void fillRepository(ArrayList<AccountRequest> repository) { _repository = repository; }
+
+    public AccountRequestManager() { super(); }
+
+    public void createAccountRequest()
+    {
 
     }
 
-    public void accountRequestStatus() {
+    public void accountRequestStatus()
+    {
 
     }
 
@@ -20,9 +27,9 @@ public class AccountRequestManager {
 
     }
 
-    public void getAll()
+    public ArrayList<AccountRequest> getAll()
     {
-
+        return _repository;
     }
 
     public void query()
