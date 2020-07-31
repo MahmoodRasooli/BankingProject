@@ -31,8 +31,26 @@ public class EmployeeManager
         return _repository;
     }
 
-    public void query()
-    {
+    // Find an employee by Id
+    public Employee find(int employeeId) {
 
+        for(Employee item : _repository) {
+            if(item.getId() == employeeId){
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean checkIfEmployeeIsValid(int employeeId, StringBuilder errorMessage) {
+        
+        Employee employee = find(employeeId);
+        if(employee == null || employee.getIsDeleted()) {
+            errorMessage.append("Client does not exist.");
+            return false;
+        }
+        
+        return true;
     }
 }

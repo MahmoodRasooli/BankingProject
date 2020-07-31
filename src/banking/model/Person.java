@@ -14,6 +14,7 @@ public abstract class Person
     private int createrUser;
     private Date createDate;
     private Date birthdate;
+    private boolean isDeleted;
 
     public int getId() { return Id; }
 
@@ -54,6 +55,8 @@ public abstract class Person
     public void setBirthdate(Date birthdate) { this.birthdate = birthdate; }
 
     public Date getBirthdate() { return birthdate; }
+    
+    public boolean getIsDeleted() { return isDeleted; }
 
-
+    public void setIsDeleted(boolean isDeleted) { this.isDeleted = isDeleted; }
 }

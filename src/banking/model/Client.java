@@ -1,15 +1,16 @@
 package banking.model;
 
-public class Client
+public final class Client extends Person
 {
     private String password;
-    private int clientId;
+    private String clientCode;
 
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
 
-    public int getClientId() { return clientId; }
+    public String getClientCode() { return clientCode; }
 
-    public void setClientId(int clientId) { this.clientId = clientId; }
+    public void setClientCode(String clientCode) { this.clientCode = clientCode; }
+
 }

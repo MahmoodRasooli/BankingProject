@@ -1,14 +1,11 @@
 package banking.core;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import banking.model.Account;
 import banking.model.AccountStatus;
-import banking.model.Transaction;
-//import org.json.simple.JSONObject;
+import banking.model.AccountStatus;
 
 public class AccountManager
 {
@@ -20,39 +17,27 @@ public class AccountManager
         _repository = repository;
     }
 
-    public void createAccount(int accountNumber,
-                              String accountHolder,
+    public boolean createAccount(int accountNumber,
                               int clientId,
                               long initialAmount,
-                              long creatorId,
-                              String type)
+                              int creatorId,
+                              String type,
+                              StringBuilder errorMessage)
     {
         Account account = new Account();
-        System.out.println("Enter the account number");
         account.setAccountNumber(accountNumber);
-
-        System.out.println("Enter the name of account holder");
-        account.setAccountHolder(accountHolder);
-
-        System.out.println("Enter the initial amount");
+        account.setClientId(clientId);
         account.setBalance(initialAmount);
-
-        System.out.println("Enter the account creator name");
-        account.setCreateUser(clientId);
-
-        account.setType(type);
+        account.setCreateDate(new Date());
+        account.setCreateUser(creatorId);
         account.setStatus(AccountStatus.Active);
         account.setDeleted(false);
+        account.setType(type);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        account.setCreateDate(date);
+        if(!validateAccountCreation(account, errorMessage))
+            return false;
 
-        this._repository.add(account);
-        //JSONObject JsonAccount = new JSONObject();
-        FileManager fileManager = new FileManager();
-        StringBuilder stringBuilder = new StringBuilder();
-        fileManager.initiateAccountFile(stringBuilder);
+        return true;
     }
 
     public void showAccount()
@@ -73,5 +58,33 @@ public class AccountManager
     public ArrayList<Account> getAll()
     {
         return _repository;
+    }
+
+    // Find account by AccountNumber
+    public Account find(int accountNumber) {
+
+        for(Account item : _repository) {
+            if(item.getAccountNumber() == accountNumber){
+                return item;
+            }
+        }
+        
+        return null;
+    }
+
+    // Validates if the entered information is valid
+    private boolean validateAccountCreation(Account account, StringBuilder errorMessage) {
+
+        // Checks if account number already exists
+        if(find(account.getAccountNumber()) != null) {
+            errorMessage.append("Account number exists.");
+            return false;
+        }
+
+        ClientManager clientManager = new ClientManager();
+        if(!clientManager.checkIfClientIsValid(account.getClientId(), errorMessage)) {
+            return false;
+        }
+        return true;
     }
 }

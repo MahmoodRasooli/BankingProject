@@ -1,7 +1,6 @@
 package banking.core;
 
 import java.util.ArrayList;
-import java.util.List;
 import banking.model.Client;
 
 public class ClientManager
@@ -33,8 +32,26 @@ public class ClientManager
         return _repository;
     }
 
-    public void query()
-    {
+    // Find a client by Id
+    public Client find(int id) {
 
+        for(Client item : _repository) {
+            if(item.getId() == id){
+                return item;
+            }
+        }
+        
+        return null;
+    }
+
+    public boolean checkIfClientIsValid(int clientId, StringBuilder errorMessage) {
+        Client client = find(clientId);
+        
+        if(client == null || client.getIsDeleted()) {
+            errorMessage.append("Client does not exist.");
+            return false;
+        }
+        
+        return true;
     }
 }

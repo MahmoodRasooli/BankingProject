@@ -6,7 +6,7 @@ public class Account
 {
     private long balance;
     private String type;
-    private String accountHolder;
+    private int clientId;
     private int accountNumber;
     private Date createDate;
     private int createUser;
@@ -41,7 +41,7 @@ public class Account
 
     public void setType(String type) { this.type = type; }
 
-    public String getAccountHolder() { return accountHolder; }
+    public int getClientId() { return clientId; }
 
-    public void setAccountHolder(String accountHolder) { this.accountHolder = accountHolder; }
+    public void setClientId(int clientId) { this.clientId = clientId; }
 }

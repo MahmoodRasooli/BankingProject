@@ -1,15 +1,15 @@
 package banking.model;
 
-public class Employee
+public final class Employee extends Person
 {
     private int salary;
     private String password;
     private role role;
-    private int employeeId;
+    private String employeeCode;
 
-    public int getEmployeeId() { return employeeId; }
+    public String getEmployeeId() { return employeeCode; }
 
-    public void setEmployeeId(int employeeId) { this.employeeId = employeeId; }
+    public void setEmployeeId(String employeeCode) { this.employeeCode = employeeCode; }
 
     public banking.model.role getRole() { return role; }
 
