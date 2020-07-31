@@ -11,8 +11,10 @@ import banking.model.TransactionRequest;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 // The main class to handle IO operations
 public class FileManager {
@@ -54,7 +56,8 @@ public class FileManager {
 
         try {
             if (!clientFile.createNewFile()) {
-                ArrayList<Client> data = readFile(EntityType.Client);
+                Gson gson = new Gson();
+                ArrayList<Client> data = gson.fromJson(readFile(EntityType.Client), new TypeToken<ArrayList<Client>>(){}.getType());
 
                 if (data == null)
                     data = new ArrayList<Client>();
@@ -76,7 +79,8 @@ public class FileManager {
 
         try {
             if (!employeeFile.createNewFile()) {
-                ArrayList<Employee> data = readFile(EntityType.Employee);
+                Gson gson = new Gson();
+                ArrayList<Employee> data = gson.fromJson(readFile(EntityType.Employee), new TypeToken<ArrayList<Employee>>(){}.getType());
 
                 if (data == null)
                     data = new ArrayList<Employee>();
@@ -98,7 +102,9 @@ public class FileManager {
 
         try {
             if (!accountFile.createNewFile()) {
-                ArrayList<Account> data = readFile(EntityType.Account);
+                Gson gson = new Gson();
+                ArrayList<Account> data = gson.fromJson(readFile(EntityType.Account), new TypeToken<ArrayList<Account>>(){}.getType());
+
 
                 if (data == null)
                     data = new ArrayList<Account>();
@@ -120,7 +126,8 @@ public class FileManager {
 
         try {
             if (!transactionFile.createNewFile()) {
-                ArrayList<Transaction> data = readFile(EntityType.Transaction);
+                Gson gson = new Gson();
+                ArrayList<Transaction> data = gson.fromJson(readFile(EntityType.Transaction), new TypeToken<ArrayList<Transaction>>(){}.getType());
 
                 if (data == null)
                     data = new ArrayList<Transaction>();
@@ -142,7 +149,8 @@ public class FileManager {
 
         try {
             if (!accountRequestFile.createNewFile()) {
-                ArrayList<AccountRequest> data = readFile(EntityType.AccountRequest);
+                Gson gson = new Gson();
+                ArrayList<AccountRequest> data = gson.fromJson(readFile(EntityType.AccountRequest), new TypeToken<ArrayList<AccountRequest>>(){}.getType());
 
                 if (data == null)
                     data = new ArrayList<AccountRequest>();
@@ -164,7 +172,8 @@ public class FileManager {
 
         try {
             if (!transactionRequestFile.createNewFile()) {
-                ArrayList<TransactionRequest> data = readFile(EntityType.TransactionRequest);
+                Gson gson = new Gson();
+                ArrayList<TransactionRequest> data = gson.fromJson(readFile(EntityType.TransactionRequest), new TypeToken<ArrayList<TransactionRequest>>(){}.getType());
 
                 if (data == null)
                     data = new ArrayList<TransactionRequest>();
@@ -185,7 +194,10 @@ public class FileManager {
 
         try {
             Gson gson = new Gson();
-            gson.toJson(collection, new FileWriter(getFileName(entityType)));
+            FileWriter fileWriter = new FileWriter(getFileName(entityType));
+            gson.toJson(collection, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -194,12 +206,17 @@ public class FileManager {
         }
     }
 
-    public static <E> ArrayList<E> readFile(EntityType entityType) {
+    public static String readFile(EntityType entityType) {
         try {
-            Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader(getFileName(entityType)));
-            ArrayList<E> data = gson.fromJson(reader, (new ArrayList<E>()).getClass());
-            return data;
+            File file = new File(getFileName(entityType));
+            Scanner fileScanner = new Scanner(file);
+            StringBuilder result = new StringBuilder();
+            
+            while(fileScanner.hasNextLine()){
+                result.append(fileScanner.nextLine());
+            }
+
+            return result.toString();
         } catch (Exception ex) {
             return null;
         }

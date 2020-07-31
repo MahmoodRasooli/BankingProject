@@ -41,7 +41,7 @@ public class ClientManager {
     public Client findByNationalCode(String nationalCode) {
 
         for (Client item : _repository) {
-            if (item.getNationalCode() == nationalCode) {
+            if (item.getNationalCode().equals(nationalCode)) {
                 return item;
             }
         }
