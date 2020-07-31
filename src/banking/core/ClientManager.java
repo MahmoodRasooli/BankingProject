@@ -38,6 +38,7 @@ public class ClientManager {
         return null;
     }
 
+    // Find a client by national code
     public Client findByNationalCode(String nationalCode) {
 
         for (Client item : _repository) {
