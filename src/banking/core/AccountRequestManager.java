@@ -21,19 +21,4 @@ public class AccountRequestManager
     {
 
     }
-
-    public void search()
-    {
-
-    }
-
-    public ArrayList<AccountRequest> getAll()
-    {
-        return _repository;
-    }
-
-    public void query()
-    {
-
-    }
 }
