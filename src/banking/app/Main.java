@@ -16,8 +16,5 @@ public class Main {
             return;
         }*/
         Login login = new Login();
-        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        login.setSize(350, 350);
-        login.setVisible(true);
     }
 }

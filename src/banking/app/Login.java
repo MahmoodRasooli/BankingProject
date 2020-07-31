@@ -10,7 +10,6 @@ public class Login extends JFrame
     private JButton clientButton;
     private JButton employeeButton;
     private JLabel welcomeMessage;
-    private JPanel jPanel;
 
     public Login()
     {
@@ -26,15 +25,20 @@ public class Login extends JFrame
         employeeButton = new JButton("Employee Login");
         add(employeeButton);
 
+        ButtonHandler handler = new ButtonHandler();
+        clientButton.addActionListener(handler);
+        employeeButton.addActionListener(handler);
+
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(350, 350);
     }
 
-    private abstract class ButtonHandler implements ActionListener
+    private class ButtonHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent event)
         {
+            JFrame jFrame = new JFrame();
 
         }
     }
