@@ -55,6 +55,10 @@ public class FileManager {
         try {
             if (!clientFile.createNewFile()) {
                 ArrayList<Client> data = readFile(EntityType.Client);
+
+                if (data == null)
+                    data = new ArrayList<Client>();
+
                 ClientManager.fillRepository(data);
             } else {
                 ClientManager.fillRepository(new ArrayList<Client>());
@@ -73,6 +77,10 @@ public class FileManager {
         try {
             if (!employeeFile.createNewFile()) {
                 ArrayList<Employee> data = readFile(EntityType.Employee);
+
+                if (data == null)
+                    data = new ArrayList<Employee>();
+
                 EmployeeManager.fillRepository(data);
             } else {
                 EmployeeManager.fillRepository(new ArrayList<Employee>());
@@ -91,6 +99,10 @@ public class FileManager {
         try {
             if (!accountFile.createNewFile()) {
                 ArrayList<Account> data = readFile(EntityType.Account);
+
+                if (data == null)
+                    data = new ArrayList<Account>();
+
                 AccountManager.fillRepository(data);
             } else {
                 AccountManager.fillRepository(new ArrayList<Account>());
@@ -109,6 +121,10 @@ public class FileManager {
         try {
             if (!transactionFile.createNewFile()) {
                 ArrayList<Transaction> data = readFile(EntityType.Transaction);
+
+                if (data == null)
+                    data = new ArrayList<Transaction>();
+
                 TransactionManager.fillRepository(data);
             } else {
                 TransactionManager.fillRepository(new ArrayList<Transaction>());
@@ -127,6 +143,10 @@ public class FileManager {
         try {
             if (!accountRequestFile.createNewFile()) {
                 ArrayList<AccountRequest> data = readFile(EntityType.AccountRequest);
+
+                if (data == null)
+                    data = new ArrayList<AccountRequest>();
+
                 AccountRequestManager.fillRepository(data);
             } else {
                 AccountRequestManager.fillRepository(new ArrayList<AccountRequest>());
@@ -145,6 +165,10 @@ public class FileManager {
         try {
             if (!transactionRequestFile.createNewFile()) {
                 ArrayList<TransactionRequest> data = readFile(EntityType.TransactionRequest);
+
+                if (data == null)
+                    data = new ArrayList<TransactionRequest>();
+
                 TransactionRequestManager.fillRepository(data);
             } else {
                 TransactionRequestManager.fillRepository(new ArrayList<TransactionRequest>());
@@ -157,13 +181,15 @@ public class FileManager {
         }
     }
 
-    public static <T> boolean writeToFile(ArrayList<T> collection, EntityType entityType) {
+    public static <T> boolean writeToFile(ArrayList<T> collection, EntityType entityType, StringBuilder errorMessage) {
+
         try {
             Gson gson = new Gson();
             gson.toJson(collection, new FileWriter(getFileName(entityType)));
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
+            errorMessage.append(String.format("Error in saving {0} file", entityType));
             return false;
         }
     }

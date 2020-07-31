@@ -21,9 +21,9 @@ public class Account
 
     public void setCreateUser(int createUser) { this.createUser = createUser; }
 
-    public boolean isDeleted() { return isDeleted; }
+    public boolean getIsDeleted() { return isDeleted; }
 
-    public void setDeleted(boolean deleted) { isDeleted = deleted; }
+    public void setIsDeleted(boolean deleted) { isDeleted = deleted; }
 
     public AccountStatus getStatus() { return status; }
 
