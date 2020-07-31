@@ -8,7 +8,7 @@ import java.util.Date;
 import banking.model.Account;
 import banking.model.AccountStatus;
 import banking.model.Transaction;
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONObject;
 
 public class AccountManager
 {
@@ -49,7 +49,7 @@ public class AccountManager
         account.setCreateDate(date);
 
         this._repository.add(account);
-        JSONObject JsonAccount = new JSONObject();
+        //JSONObject JsonAccount = new JSONObject();
         FileManager fileManager = new FileManager();
         StringBuilder stringBuilder = new StringBuilder();
         fileManager.initiateAccountFile(stringBuilder);

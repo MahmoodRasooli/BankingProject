@@ -2,7 +2,9 @@ package banking.core;
 
 import banking.model.Account;
 import com.google.gson.stream.JsonReader;
-import org.json.simple.JSONObject;
+import com.google.gson.stream.JsonWriter;
+
+//import org.json.simple.JSONObject;
 import banking.model.Transaction;
 import javax.swing.text.html.parser.Entity;
 import java.io.*;
@@ -178,18 +180,24 @@ public class FileManager
         }
     }
 
-    public static void writeToFile(JSONObject jsonObject, EntityType type)
+    public static <T> boolean writeToFile(ArrayList<T> collection, EntityType entityType)
     {
         try
         {
-            FileWriter fileWriter = new FileWriter(getFileName(type));
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.close();
+            Gson gson = new Gson();
+            JsonWriter writer = new JsonWriter(new FileWriter(getFileName(entityType)));
+            writer.jsonValue(gson.toJson(collection)).flush();
+            
+            //FileWriter fileWriter = new FileWriter(getFileName(type));
+            //fileWriter.write(jsonObject.toJSONString());
+            //fileWriter.close();
         }
         catch (IOException ex)
         {
             ex.printStackTrace();
         }
+
+        return true;
     }
 
     public static <E> ArrayList<E> readFile(EntityType entityType)
