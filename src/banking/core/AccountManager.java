@@ -40,19 +40,24 @@ public class AccountManager
         return true;
     }
 
-    public void showAccount()
+    public void showAccount(int accountNumber)
     {
-
+        for(Account item : _repository) if (item.getAccountNumber() == accountNumber) System.out.print(item);
     }
 
-    public void updateAccount()
+    public boolean updateAccount()
     {
-
+        return false;
     }
 
-    public void deleteAccount()
+    public boolean deleteAccount(int accountNumber)
     {
-
+        Account foundedAccount = find(accountNumber);
+        if(foundedAccount != null) {
+            _repository.remove(foundedAccount);
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Account> getAll()

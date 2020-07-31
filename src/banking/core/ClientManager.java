@@ -22,8 +22,9 @@ public class ClientManager
 
     }
 
-    public void search()
+    public void search(int Id)
     {
+        Client foundedClient = find(Id);
 
     }
 

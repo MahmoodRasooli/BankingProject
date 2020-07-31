@@ -16,7 +16,7 @@ public class EmployeeManager
 
     }
 
-    public void updateEmployee()
+    public void updateEmployee(int employeeId)
     {
 
     }
