@@ -43,11 +43,12 @@ public class EmployeeManager
         return null;
     }
 
+    // Checks if the given employeeId is valid
     public boolean checkIfEmployeeIsValid(int employeeId, StringBuilder errorMessage) {
         
         Employee employee = find(employeeId);
         if(employee == null || employee.getIsDeleted()) {
-            errorMessage.append("Client does not exist.");
+            errorMessage.append("Employee does not exist.");
             return false;
         }
         

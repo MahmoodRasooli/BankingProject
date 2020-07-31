@@ -1,17 +1,22 @@
 package banking.core;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import banking.model.Account;
 import banking.model.AccountStatus;
-import banking.model.AccountStatus;
 
 public class AccountManager
 {
-    private static ArrayList<Account> _repository = new ArrayList<Account>();
+    private static ArrayList<Account> _repository = new ArrayList<Account>();    
+    private final ClientManager _clientManager;
+    private final EmployeeManager _employeeManager;
 
-    public AccountManager() { super(); }
+    public AccountManager() {
+        super();
+
+        _clientManager = new ClientManager();
+        _employeeManager = new EmployeeManager();
+    }
 
     public static void fillRepository(ArrayList<Account> repository) {
         _repository = repository;
@@ -81,10 +86,15 @@ public class AccountManager
             return false;
         }
 
-        ClientManager clientManager = new ClientManager();
-        if(!clientManager.checkIfClientIsValid(account.getClientId(), errorMessage)) {
+        // Validates the client
+        if(!_clientManager.checkIfClientIsValid(account.getClientId(), errorMessage)) {
             return false;
         }
+
+        // Validates the employee
+        if(!_employeeManager.checkIfEmployeeIsValid(account.getCreateUser(), errorMessage))
+            return false;
+
         return true;
     }
 }
