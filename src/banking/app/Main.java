@@ -6,9 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
         StringBuilder errorMessage = new StringBuilder();
-        boolean initiateFilesResult = FileManager.initiateFiles(errorMessage);
 
-        if(!initiateFilesResult) {
+        if(!FileManager.initiateFiles(errorMessage)) {
             System.out.println(errorMessage);
             return;
         }

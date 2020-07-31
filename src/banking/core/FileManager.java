@@ -1,239 +1,190 @@
 package banking.core;
 
 import banking.model.Account;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import banking.model.AccountRequest;
+import banking.model.Client;
+import banking.model.Employee;
 
-//import org.json.simple.JSONObject;
+import com.google.gson.stream.JsonReader;
 import banking.model.Transaction;
-import javax.swing.text.html.parser.Entity;
+import banking.model.TransactionRequest;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-
 
 // The main class to handle IO operations
-public class FileManager
-{
-    private static final String _clientFileName = "Client.json";
-    private static final String _employeeFileName = "Employee.json";
-    private static final String _accountFileName = "Account.json";
-    private static final String _transactionFileName = "Transaction.json";
-    private static final String _accountRequstFileName = "AccountRequest.json";
-    private static final String __transactionRequestFileName = "TransactionRequest.json";
+public class FileManager {
+    private static final String _clientFileName = "repos-files/Client.json";
+    private static final String _employeeFileName = "repos-files/Employee.json";
+    private static final String _accountFileName = "repos-files/Account.json";
+    private static final String _transactionFileName = "repos-files/Transaction.json";
+    private static final String _accountRequstFileName = "repos-files/AccountRequest.json";
+    private static final String _transactionRequestFileName = "repos-files/TransactionRequest.json";
 
     // Creates the necessary files if needed.
-    public static boolean initiateFiles(StringBuilder errorMessage)
-    {
-        if(!initiateClientFile(errorMessage))
+    public static boolean initiateFiles(StringBuilder errorMessage) {
+        if (!initiateClientFile(errorMessage))
             return false;
 
-        if(!initiateEmployeeFile(errorMessage))
+        if (!initiateEmployeeFile(errorMessage))
             return false;
 
-        if(!initiateAccountFile(errorMessage))
+        if (!initiateAccountFile(errorMessage))
             return false;
 
-        if(!initiateTransactionFile(errorMessage))
+        if (!initiateTransactionFile(errorMessage))
             return false;
 
-        if(!initiateAccountRequestFile(errorMessage))
+        if (!initiateAccountRequestFile(errorMessage))
             return false;
 
-        if(!initiateTransactionRequestFile(errorMessage))
+        if (!initiateTransactionRequestFile(errorMessage))
             return false;
 
-        if(!initiateAccountFile(errorMessage))
+        if (!initiateAccountFile(errorMessage))
             return false;
 
         return true;
     }
 
-    public static boolean initiateClientFile(StringBuilder errorMessage)
-    {
+    public static boolean initiateClientFile(StringBuilder errorMessage) {
         File clientFile = new File(_clientFileName);
 
-        try
-        {
-            if(!clientFile.createNewFile()) {
-                ArrayList<Account> data = readFile(EntityType.Account);
-                AccountManager.fillRepository(data);
-            }
-            else{
-                TransactionManager.fillRepository(new ArrayList<Transaction>());
+        try {
+            if (!clientFile.createNewFile()) {
+                ArrayList<Client> data = readFile(EntityType.Client);
+                ClientManager.fillRepository(data);
+            } else {
+                ClientManager.fillRepository(new ArrayList<Client>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating Client.json file.");
             return false;
         }
     }
 
-    public static boolean initiateEmployeeFile(StringBuilder errorMessage)
-    {
+    public static boolean initiateEmployeeFile(StringBuilder errorMessage) {
         File employeeFile = new File(_employeeFileName);
 
-        try
-        {
-            if(!employeeFile.createNewFile()) {
-                ArrayList<Account> data = readFile(EntityType.Account);
-                AccountManager.fillRepository(data);
-            }
-            else{
-                TransactionManager.fillRepository(new ArrayList<Transaction>());
+        try {
+            if (!employeeFile.createNewFile()) {
+                ArrayList<Employee> data = readFile(EntityType.Employee);
+                EmployeeManager.fillRepository(data);
+            } else {
+                EmployeeManager.fillRepository(new ArrayList<Employee>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating Employee.json file.");
             return false;
         }
     }
 
-    public static boolean initiateAccountFile(StringBuilder errorMessage)
-    {
+    public static boolean initiateAccountFile(StringBuilder errorMessage) {
         File accountFile = new File(_accountFileName);
 
-        try
-        {
-            if(!accountFile.createNewFile()) {
+        try {
+            if (!accountFile.createNewFile()) {
                 ArrayList<Account> data = readFile(EntityType.Account);
                 AccountManager.fillRepository(data);
-            }
-            else{
-                TransactionManager.fillRepository(new ArrayList<Transaction>());
+            } else {
+                AccountManager.fillRepository(new ArrayList<Account>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating Account.json file.");
             return false;
         }
     }
 
-    public static boolean initiateTransactionFile(StringBuilder errorMessage)
-    {
+    public static boolean initiateTransactionFile(StringBuilder errorMessage) {
         File transactionFile = new File(_transactionFileName);
 
-        try
-        {
-            if(!transactionFile.createNewFile()) {
+        try {
+            if (!transactionFile.createNewFile()) {
                 ArrayList<Transaction> data = readFile(EntityType.Transaction);
                 TransactionManager.fillRepository(data);
-            }
-            else{
+            } else {
                 TransactionManager.fillRepository(new ArrayList<Transaction>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating Transaction.json file.");
             return false;
         }
     }
 
-    public static boolean initiateAccountRequestFile(StringBuilder errorMessage)
-    {
+    public static boolean initiateAccountRequestFile(StringBuilder errorMessage) {
         File accountRequestFile = new File(_accountRequstFileName);
 
-        try
-        {
-            if(!accountRequestFile.createNewFile()) {
-                ArrayList<Transaction> data = readFile(EntityType.Transaction);
-                TransactionManager.fillRepository(data);
-            }
-            else{
-                TransactionManager.fillRepository(new ArrayList<Transaction>());
+        try {
+            if (!accountRequestFile.createNewFile()) {
+                ArrayList<AccountRequest> data = readFile(EntityType.AccountRequest);
+                AccountRequestManager.fillRepository(data);
+            } else {
+                AccountRequestManager.fillRepository(new ArrayList<AccountRequest>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating AccountRequest.json file.");
             return false;
         }
     }
 
-    public static boolean initiateTransactionRequestFile(StringBuilder errorMessage)
-    {
-        File transactionRequestFile = new File(_transactionFileName);
+    public static boolean initiateTransactionRequestFile(StringBuilder errorMessage) {
+        File transactionRequestFile = new File(_transactionRequestFileName);
 
-        try
-        {
-            if(!transactionRequestFile.createNewFile()) {
-                ArrayList<Transaction> data = readFile(EntityType.Transaction);
-                TransactionManager.fillRepository(data);
-            }
-            else{
-                TransactionManager.fillRepository(new ArrayList<Transaction>());
+        try {
+            if (!transactionRequestFile.createNewFile()) {
+                ArrayList<TransactionRequest> data = readFile(EntityType.TransactionRequest);
+                TransactionRequestManager.fillRepository(data);
+            } else {
+                TransactionRequestManager.fillRepository(new ArrayList<TransactionRequest>());
             }
 
             return true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage.append("Error in initiating transaction file.");
+        } catch (Exception ex) {
+            errorMessage.append("Error in initiating TransactionRequest.json file.");
             return false;
         }
     }
 
-    public static <T> boolean writeToFile(ArrayList<T> collection, EntityType entityType)
-    {
-        try
-        {
+    public static <T> boolean writeToFile(ArrayList<T> collection, EntityType entityType) {
+        try {
             Gson gson = new Gson();
-            JsonWriter writer = new JsonWriter(new FileWriter(getFileName(entityType)));
-            writer.jsonValue(gson.toJson(collection)).flush();
-            
-            //FileWriter fileWriter = new FileWriter(getFileName(type));
-            //fileWriter.write(jsonObject.toJSONString());
-            //fileWriter.close();
-        }
-        catch (IOException ex)
-        {
+            gson.toJson(collection, new FileWriter(getFileName(entityType)));
+            return true;
+        } catch (IOException ex) {
             ex.printStackTrace();
+            return false;
         }
-
-        return true;
     }
 
-    public static <E> ArrayList<E> readFile(EntityType entityType)
-    {
+    public static <E> ArrayList<E> readFile(EntityType entityType) {
         try {
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader(getFileName(entityType)));
             ArrayList<E> data = gson.fromJson(reader, (new ArrayList<E>()).getClass());
             return data;
-        }
-        catch (Exception ex) {
-            return  null;
+        } catch (Exception ex) {
+            return null;
         }
     }
 
-    private static String getFileName(EntityType fileType)
-    {
-        switch (fileType){
+    private static String getFileName(EntityType fileType) {
+        switch (fileType) {
             case Account:
                 return _accountFileName;
             case AccountRequest:
-                return  _accountRequstFileName;
+                return _accountRequstFileName;
             case Client:
                 return _clientFileName;
             case Employee:
@@ -241,7 +192,7 @@ public class FileManager
             case Transaction:
                 return _transactionFileName;
             case TransactionRequest:
-                return  __transactionRequestFileName;
+                return _transactionRequestFileName;
             default:
                 return "";
         }
