@@ -8,33 +8,23 @@ import java.util.ArrayList;
 public class TransactionRequestManager
 {
     private static ArrayList<TransactionRequest> _repository = new ArrayList<>();
+    private final AccountManager _accountManager;
+    private final ClientManager _clientManager;
+    private final EmployeeManager _employeeManager;
 
     public static void fillRepository(ArrayList<TransactionRequest> repository) { _repository = repository; }
 
-    public TransactionRequestManager() { super(); }
-
-    public void createTransactionRequest()
-    {
-
+    public TransactionRequestManager() {
+        super();
+        _accountManager = new AccountManager();
+        _clientManager = new ClientManager();
+        _employeeManager = new EmployeeManager();
     }
 
-    public void transactionRequestStatus()
-    {
-
-    }
-
-    public void search()
-    {
-
-    }
+    public boolean createTransactionRequest() { return true; }
 
     public ArrayList<TransactionRequest> getAll()
     {
         return _repository;
-    }
-
-    public void query()
-    {
-
     }
 }

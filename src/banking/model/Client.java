@@ -3,14 +3,19 @@ package banking.model;
 public final class Client extends Person
 {
     private String password;
-    private String clientCode;
+    String nationalCode;
+    String clientCode;
+
+    public String getClientCode() { return clientCode; }
+
+    public void setClientCode(String clientCode) { this.clientCode = clientCode; }
 
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
 
-    public String getClientCode() { return clientCode; }
+    public String getNationalCode() { return nationalCode; }
 
-    public void setClientCode(String clientCode) { this.clientCode = clientCode; }
+    public void setNationalCode(String nationalCode) { this.nationalCode = nationalCode; }
 
 }

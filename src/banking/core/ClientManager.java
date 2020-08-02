@@ -1,10 +1,9 @@
 package banking.core;
 
+import banking.model.Client;
+
 import java.util.ArrayList;
 import java.util.Date;
-
-import banking.model.Client;
-import banking.model.Employee;
 import java.util.UUID;
 
 public class ClientManager {
@@ -82,8 +81,29 @@ public class ClientManager {
         return true;
     }
 
-    public boolean update(String firstName, String lastName, String gender, String phoneNumber, String address,
-            String email, Date birthdate, String nationalCode, String password) {
+    public boolean update(int Id, String firstName, String lastName, String gender, String phoneNumber, String address,
+            String email, Date birthdate, String nationalCode, String password, StringBuilder errorMessage) {
+        if (!checkIfClientIsValid(Id, errorMessage))
+            return false;
+
+        Client client = find(Id);
+
+        client.setAddress(address);
+        client.setBirthdate(birthdate);
+        client.setCreateDate(new Date());
+        client.setEmail(email);
+        client.setFirstName(firstName);
+        client.setGender(gender);
+        client.setIsDeleted(false);
+        client.setLastName(lastName);
+        client.setPassword(password);
+        client.setPhoneNumber(phoneNumber);
+        client.setId(getNewClientId());
+        client.setNationalCode(nationalCode);
+
+        if (!FileManager.writeToFile(_repository, EntityType.Client, errorMessage))
+            return false;
+
         return true;
     }
 
