@@ -1,5 +1,6 @@
 package banking.core;
 
+import banking.model.Account;
 import banking.model.Client;
 import banking.model.role;
 
@@ -163,6 +164,15 @@ public class ClientManager {
         }
 
         return maxClientId + 1;
+    }
+
+    public boolean login(int Id, String password, StringBuilder errorMessage){
+        Client client = find(Id);
+        if(checkIfClientIsValid(Id, errorMessage)){
+            if(client.getPassword().equals(password))
+                return true;
+        }
+        return false;
     }
 
     public boolean deleteClient(role role, int Id, StringBuilder errorMessage) {

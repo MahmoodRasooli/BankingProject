@@ -126,6 +126,15 @@ public class EmployeeManager
         return maxEmployeeId + 1;
     }
 
+    public boolean login(int Id, String password, StringBuilder errorMessage){
+        Employee employee = find(Id);
+        if(checkIfEmployeeIsValid(Id, errorMessage)){
+            if (employee.getPassword().equals(password))
+                return true;
+        }
+        return false;
+    }
+
     public boolean deleteEmployee(role role, int Id, StringBuilder errorMessage) {
         if (role == banking.model.role.bankManager) {
             if (!checkIfEmployeeIsValid(Id, errorMessage))
