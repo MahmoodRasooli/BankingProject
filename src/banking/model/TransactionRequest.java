@@ -1,4 +1,4 @@
 package banking.model;
 
-public class TransactionRequest {
+public class TransactionRequest extends Request {
 }

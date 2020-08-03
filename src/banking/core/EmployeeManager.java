@@ -3,6 +3,7 @@ package banking.core;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import banking.model.Account;
 import banking.model.Client;
@@ -61,6 +62,25 @@ public class EmployeeManager
 
     public ArrayList<Employee> getAll() { return _repository; }
 
+    public ArrayList<Employee> sortAll(ArrayList<Employee> repository) {
+
+        ArrayList<Employee> sortedRepository = new ArrayList<>();
+        ArrayList<String> employeeNames = repository.stream().map(item -> item.getFirstName() + item.getLastName()).sorted().collect(Collectors.toCollection(ArrayList::new));
+        repository.forEach(item -> {
+            employeeNames.stream().filter(str -> str.equals(item.getFirstName() + item.getLastName())).map(str -> findByFirstAndLastName(item.getFirstName(), item.getLastName())).forEach(sortedRepository::add);
+        });
+        return sortedRepository;
+    }
+
+    public Employee findByFirstAndLastName(String firstName, String lastName) {
+
+        for (Employee item : _repository) {
+            if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
+                return item;
+        }
+        return null;
+    }
+
     // Find an employee by Id
     public Employee find(int employeeId) {
 
@@ -106,13 +126,13 @@ public class EmployeeManager
         return maxEmployeeId + 1;
     }
 
-    public boolean deleteClient(role role, int Id, StringBuilder errorMessage) {
+    public boolean deleteEmployee(role role, int Id, StringBuilder errorMessage) {
         if (role == banking.model.role.bankManager) {
-            if (!_clientManager.checkIfClientIsValid(Id, errorMessage))
+            if (!checkIfEmployeeIsValid(Id, errorMessage))
                 return false;
 
-            Client client = _clientManager.find(Id);
-            client.setIsDeleted(true);
+            Employee employee = find(Id);
+            employee.setIsDeleted(true);
 
             if (!FileManager.writeToFile(_repository, EntityType.Client, errorMessage))
                 return false;

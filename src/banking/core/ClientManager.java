@@ -1,10 +1,13 @@
 package banking.core;
 
 import banking.model.Client;
+import banking.model.role;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ClientManager {
     private static ArrayList<Client> _repository = new ArrayList<Client>();
@@ -21,8 +24,25 @@ public class ClientManager {
     }
 
     // Returns a list which contains all the clients
-    public ArrayList<Client> getAll() {
-        return new ArrayList<Client>(_repository);
+    public ArrayList<Client> getAll() { return new ArrayList<Client>(_repository); }
+
+    public ArrayList<Client> sortAll(ArrayList<Client> repository) {
+
+        ArrayList<Client> sortedRepository = new ArrayList<>();
+        ArrayList<String> clientNames = repository.stream().map(item -> item.getFirstName() + item.getLastName()).sorted().collect(Collectors.toCollection(ArrayList::new));
+        repository.forEach(item -> {
+            clientNames.stream().filter(str -> str.equals(item.getFirstName() + item.getLastName())).map(str -> findByFirstAndLastName(item.getFirstName(), item.getLastName())).forEach(sortedRepository::add);
+        });
+        return sortedRepository;
+    }
+
+    public Client findByFirstAndLastName(String firstName, String lastName) {
+
+        for (Client item : _repository) {
+            if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
+                return item;
+        }
+        return null;
     }
 
     // Find a client by Id
@@ -143,5 +163,21 @@ public class ClientManager {
         }
 
         return maxClientId + 1;
+    }
+
+    public boolean deleteClient(role role, int Id, StringBuilder errorMessage) {
+        if (role == banking.model.role.bankManager) {
+            if (!checkIfClientIsValid(Id, errorMessage))
+                return false;
+
+            Client client = find(Id);
+            client.setIsDeleted(true);
+
+            if (!FileManager.writeToFile(_repository, EntityType.Client, errorMessage))
+                return false;
+
+            return true;
+        }
+        return false;
     }
 }

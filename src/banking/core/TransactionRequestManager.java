@@ -21,7 +21,10 @@ public class TransactionRequestManager
         _employeeManager = new EmployeeManager();
     }
 
-    public boolean createTransactionRequest() { return true; }
+    public boolean createTransactionRequest() {
+
+        return true;
+    }
 
     public ArrayList<TransactionRequest> getAll()
     {

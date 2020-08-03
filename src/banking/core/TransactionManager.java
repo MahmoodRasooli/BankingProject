@@ -1,7 +1,6 @@
 package banking.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import banking.model.Account;
 import banking.model.Client;
@@ -65,8 +64,7 @@ public class TransactionManager
     }
 
     public boolean transfer(int sourceAccountNumber, int targetAccountNumber, int clientId, int employeeId,
-            long amount, StringBuilder errorMessage)
-    {
+            long amount, StringBuilder errorMessage) {
         if(_accountManager.checkIfAccountIsValid(sourceAccountNumber, errorMessage) &&
                 _accountManager.checkIfAccountIsValid(targetAccountNumber, errorMessage) &&
                 _employeeManager.checkIfEmployeeIsValid(employeeId, errorMessage) &&
@@ -93,6 +91,21 @@ public class TransactionManager
                 return false;
             }
             return false;
+        }
+        return false;
+    }
+
+    public boolean schedule(int sourceAccountNumber,ArrayList<Integer> targetAccountNumbers, int clientId, int employeeId,
+                            long amount, StringBuilder errorMessage){
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+            }
+        };
+        timer.schedule(timerTask, 1000 * 60 * 60 * 24 * 30);
+        for(int i = 0; i < targetAccountNumbers.size(); i++){
+            if(transfer(sourceAccountNumber, targetAccountNumbers.get(i), clientId, employeeId, amount, errorMessage))
+                return true;
         }
         return false;
     }

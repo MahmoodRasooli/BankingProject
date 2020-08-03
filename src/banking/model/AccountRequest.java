@@ -1,6 +1,4 @@
 package banking.model;
 
-public class AccountRequest
-{
-
+public class AccountRequest extends Request {
 }

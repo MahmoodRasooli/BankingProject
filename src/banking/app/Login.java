@@ -1,45 +1,104 @@
 package banking.app;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 
-public class Login extends JFrame
-{
-    private JButton clientButton;
-    private JButton employeeButton;
-    private JLabel welcomeMessage;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
-    public Login()
-    {
-        super("Main Page");
-        setLayout(new FlowLayout());
+public class Login {
 
-        welcomeMessage = new JLabel("welcome to Farabi Bank");
-        add(welcomeMessage);
+    private JFrame frame;
+    private JTextField username;
+    private JPasswordField password;
 
-        clientButton = new JButton("Client Login");
-        add(clientButton);
 
-        employeeButton = new JButton("Employee Login");
-        add(employeeButton);
-
-        ButtonHandler handler = new ButtonHandler();
-        clientButton.addActionListener(handler);
-        employeeButton.addActionListener(handler);
-
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(350, 350);
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Login window = new Login();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    private class ButtonHandler implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
-            JFrame jFrame = new JFrame();
-
-        }
+    /**
+     * Create the application.
+     */
+    public Login() {
+        initialize();
     }
+
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 450, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Login");
+        frame.getContentPane().setLayout(null);
+
+
+        JLabel lblUsername = new JLabel("Username:");
+        lblUsername.setBounds(69, 47, 63, 14);
+        frame.getContentPane().add(lblUsername);
+
+        JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setBounds(69, 104, 63, 14);
+        frame.getContentPane().add(lblPassword);
+
+        username = new JTextField();
+        username.setBounds(142, 44, 108, 20);
+        frame.getContentPane().add(username);
+        username.setColumns(10);
+
+        password = new JPasswordField();
+        password.setBounds(142, 101, 108, 20);
+        frame.getContentPane().add(password);
+
+        JRadioButton rdbtnAdmin = new JRadioButton("Admin");
+        rdbtnAdmin.setBounds(69, 147, 63, 23);
+        frame.getContentPane().add(rdbtnAdmin);
+
+        JRadioButton rdbtnLibrarian = new JRadioButton("Karmand");
+        rdbtnLibrarian.setBounds(153, 147, 81, 23);
+        frame.getContentPane().add(rdbtnLibrarian);
+
+        JRadioButton rdbtnMember = new JRadioButton("Moshtari");
+        rdbtnMember.setBounds(249, 147, 109, 23);
+        frame.getContentPane().add(rdbtnMember);
+
+        ButtonGroup Selections = new ButtonGroup();
+        Selections.add(rdbtnMember);
+        Selections.add(rdbtnLibrarian);
+        Selections.add(rdbtnAdmin);
+
+        JButton login = new JButton("Login");
+
+        login.setBounds(69, 207, 89, 23);
+        frame.getContentPane().add(login);
+
+        JButton btnReset = new JButton("Reset");
+        btnReset.setBounds(187, 207, 89, 23);
+        frame.getContentPane().add(btnReset);
+
+        JButton btnExit = new JButton("Exit");
+        btnExit.setBounds(311, 207, 89, 23);
+        frame.getContentPane().add(btnExit);
+
+
+    }
+
 }
