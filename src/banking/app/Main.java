@@ -1,14 +1,9 @@
 package banking.app;
 
-
-import banking.core.AccountManager;
-import java.text.DateFormat;
-import java.util.Date;
-import banking.core.ClientManager;
 import banking.core.FileManager;
-import banking.model.Account;
+import java.awt.EventQueue;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -16,15 +11,19 @@ public class Main {
         StringBuilder errorMessage = new StringBuilder();
 
         if (!FileManager.initiateFiles(errorMessage)) {
-            System.out.println(errorMessage);
+            JOptionPane.showMessageDialog(null, errorMessage, "Error: ", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        ClientManager clientManager = new ClientManager();
-        if (!clientManager.create("mahmood", "rasooli", "male", "09191981527", "tehran", "rasuli.ut@gmail.com", 1,
-                new Date(1988, 4, 11), "0112418916", "123456", errorMessage)) {
-            System.out.println(errorMessage);
-            return;
-        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    LoginFrame window = new LoginFrame();
+                    window.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
