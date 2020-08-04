@@ -103,8 +103,8 @@ public class LoginFrame extends JFrame {
 
     private class BtnLoginClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (username.getText() == null || username.getText() == "" || password.getText() == null
-                    || password.getText() == "") {
+            if (username.getText() == null || username.getText().equals("") || password.getText() == null
+                    || password.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Enter username and password", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
