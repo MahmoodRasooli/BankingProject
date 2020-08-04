@@ -11,7 +11,7 @@ public class Main {
         StringBuilder errorMessage = new StringBuilder();
 
         if (!FileManager.initiateFiles(errorMessage)) {
-            JOptionPane.showMessageDialog(null, errorMessage, "Error: ", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -22,6 +22,7 @@ public class Main {
                     window.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error in starting the application", "Error", JOptionPane.ERROR_MESSAGE);                    
                 }
             }
         });

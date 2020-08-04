@@ -1,6 +1,7 @@
 package banking.core;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -13,13 +14,11 @@ import banking.model.role;
 public class EmployeeManager
 {
     private static ArrayList<Employee> _repository = new ArrayList<>();
-    private final ClientManager _clientManager;
 
     public static void fillRepository(ArrayList<Employee> repository) { _repository = repository; }
 
     public EmployeeManager() {
         super();
-        _clientManager = new ClientManager();
     }
 
     public boolean createEmployee(String firstName, String lastName, String gender, String phoneNumber, String address,
@@ -62,23 +61,22 @@ public class EmployeeManager
 
     public ArrayList<Employee> getAll() { return _repository; }
 
-    public ArrayList<Employee> sortAll(ArrayList<Employee> repository) {
+    public ArrayList<Employee> sortByFirstNameAndLastName(ArrayList<Employee> repository) {
 
-        ArrayList<Employee> sortedRepository = new ArrayList<>();
-        ArrayList<String> employeeNames = repository.stream().map(item -> item.getFirstName() + item.getLastName()).sorted().collect(Collectors.toCollection(ArrayList::new));
-        repository.forEach(item -> {
-            employeeNames.stream().filter(str -> str.equals(item.getFirstName() + item.getLastName())).map(str -> findByFirstAndLastName(item.getFirstName(), item.getLastName())).forEach(sortedRepository::add);
+        ArrayList<Employee> sortedRepository = new ArrayList<>(_repository);
+        sortedRepository.sort(new Comparator<Employee>() {
+            @Override
+            public int compare(final Employee lhs, Employee rhs) {
+                if(lhs.getFirstName().compareTo(rhs.getFirstName()) == 0) {
+                    return lhs.getLastName().compareTo(rhs.getLastName());
+                }
+                else {
+                    return lhs.getFirstName().compareTo(rhs.getFirstName());
+                }
+            }
         });
+        
         return sortedRepository;
-    }
-
-    public Employee findByFirstAndLastName(String firstName, String lastName) {
-
-        for (Employee item : _repository) {
-            if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
-                return item;
-        }
-        return null;
     }
 
     // Find an employee by Id
@@ -86,6 +84,28 @@ public class EmployeeManager
 
         for(Employee item : _repository) {
             if(item.getId() == employeeId){
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    // Find an employee by national code
+    public Employee findByFirstAndLastName(String firstName, String lastName) {
+
+        for (Employee item : _repository) {
+            if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
+                return item;
+        }
+        
+        return null;
+    }
+
+    // Find an employee by national code
+    public Employee findByNationalCode(String nationalCode) {
+        for (Employee item : _repository) {
+            if (item.getNationalCode().equals(nationalCode)) {
                 return item;
             }
         }
@@ -126,13 +146,15 @@ public class EmployeeManager
         return maxEmployeeId + 1;
     }
 
-    public boolean login(int Id, String password, StringBuilder errorMessage){
-        Employee employee = find(Id);
-        if(checkIfEmployeeIsValid(Id, errorMessage)){
-            if (employee.getPassword().equals(password))
-                return true;
+    public Employee login(String nationalCode, String password, StringBuilder errorMessage) {
+        Employee employee = findByNationalCode(nationalCode);
+
+        if(employee == null || !employee.getPassword().equals(password) || employee.getIsDeleted()) {
+            errorMessage.append("Username or password is incorrect");
+            return null;
         }
-        return false;
+        
+        return employee;
     }
 
     public boolean deleteEmployee(role role, int Id, StringBuilder errorMessage) {

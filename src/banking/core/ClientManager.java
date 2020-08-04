@@ -37,6 +37,7 @@ public class ClientManager {
         return sortedRepository;
     }
 
+    // Find a client by his/her first name and last name
     public Client findByFirstAndLastName(String firstName, String lastName) {
 
         for (Client item : _repository) {
@@ -166,13 +167,15 @@ public class ClientManager {
         return maxClientId + 1;
     }
 
-    public boolean login(int Id, String password, StringBuilder errorMessage){
-        Client client = find(Id);
-        if(checkIfClientIsValid(Id, errorMessage)){
-            if(client.getPassword().equals(password))
-                return true;
+    public Client login(String nationalCode, String password, StringBuilder errorMessage){
+        Client client = findByNationalCode(nationalCode);
+
+        if(client == null || !client.getPassword().equals(password) || client.getIsDeleted()) {
+            errorMessage.append("Username or password is incorrect");
+            return null;
         }
-        return false;
+        
+        return client;
     }
 
     public boolean deleteClient(role role, int Id, StringBuilder errorMessage) {
