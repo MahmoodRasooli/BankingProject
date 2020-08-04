@@ -11,19 +11,20 @@ import banking.model.Client;
 import banking.model.Employee;
 import banking.model.role;
 
-public class EmployeeManager
-{
+public class EmployeeManager {
     private static ArrayList<Employee> _repository = new ArrayList<>();
 
-    public static void fillRepository(ArrayList<Employee> repository) { _repository = repository; }
+    public static void fillRepository(ArrayList<Employee> repository) {
+        _repository = repository;
+    }
 
     public EmployeeManager() {
         super();
     }
 
-    public boolean createEmployee(String firstName, String lastName, String gender, String phoneNumber, String address,
-                                  role role , long salary , String email, int createrUser, Date birthdate, String password, StringBuilder errorMessage)
-    {
+    public boolean createEmployee(String firstName, String lastName, String nationalCode, String gender, String phoneNumber, String address,
+            role role, long salary, String email, int createrUser, Date birthdate, String password,
+            StringBuilder errorMessage) {
         Employee employee = new Employee();
         employee.setAddress(address);
         employee.setBirthdate(birthdate);
@@ -40,13 +41,14 @@ public class EmployeeManager
         employee.setSalary(salary);
         employee.setEmployeeCode(UUID.randomUUID().toString().toLowerCase());
         employee.setRole(role);
+        employee.setNationalCode(nationalCode);
 
         if (!validateEmployeeCreation(employee, errorMessage))
             return false;
 
         _repository.add(employee);
 
-        if(!FileManager.writeToFile(_repository, EntityType.Employee, errorMessage)) {
+        if (!FileManager.writeToFile(_repository, EntityType.Employee, errorMessage)) {
             _repository.remove(employee);
             return false;
         }
@@ -55,11 +57,13 @@ public class EmployeeManager
     }
 
     public boolean update(String firstName, String lastName, String gender, String phoneNumber, String address,
-                          String email, Date birthdate, String nationalCode, String password, long salary) {
+            String email, Date birthdate, String nationalCode, String password, long salary) {
         return true;
     }
 
-    public ArrayList<Employee> getAll() { return _repository; }
+    public ArrayList<Employee> getAll() {
+        return _repository;
+    }
 
     public ArrayList<Employee> sortByFirstNameAndLastName(ArrayList<Employee> repository) {
 
@@ -67,23 +71,22 @@ public class EmployeeManager
         sortedRepository.sort(new Comparator<Employee>() {
             @Override
             public int compare(final Employee lhs, Employee rhs) {
-                if(lhs.getFirstName().compareTo(rhs.getFirstName()) == 0) {
+                if (lhs.getFirstName().compareTo(rhs.getFirstName()) == 0) {
                     return lhs.getLastName().compareTo(rhs.getLastName());
-                }
-                else {
+                } else {
                     return lhs.getFirstName().compareTo(rhs.getFirstName());
                 }
             }
         });
-        
+
         return sortedRepository;
     }
 
     // Find an employee by Id
     public Employee find(int employeeId) {
 
-        for(Employee item : _repository) {
-            if(item.getId() == employeeId){
+        for (Employee item : _repository) {
+            if (item.getId() == employeeId) {
                 return item;
             }
         }
@@ -98,7 +101,7 @@ public class EmployeeManager
             if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
                 return item;
         }
-        
+
         return null;
     }
 
@@ -115,13 +118,13 @@ public class EmployeeManager
 
     // Checks if the given employeeId is valid
     public boolean checkIfEmployeeIsValid(int employeeId, StringBuilder errorMessage) {
-        
+
         Employee employee = find(employeeId);
-        if(employee == null || employee.getIsDeleted()) {
+        if (employee == null || employee.getIsDeleted()) {
             errorMessage.append("Employee does not exist.");
             return false;
         }
-        
+
         return true;
     }
 
@@ -149,11 +152,11 @@ public class EmployeeManager
     public Employee login(String nationalCode, String password, StringBuilder errorMessage) {
         Employee employee = findByNationalCode(nationalCode);
 
-        if(employee == null || !employee.getPassword().equals(password) || employee.getIsDeleted()) {
+        if (employee == null || !employee.getPassword().equals(password) || employee.getIsDeleted()) {
             errorMessage.append("Username or password is incorrect");
             return null;
         }
-        
+
         return employee;
     }
 
