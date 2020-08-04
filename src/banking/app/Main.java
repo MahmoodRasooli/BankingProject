@@ -21,7 +21,10 @@ public class Main {
 
         EmployeeManager employeeManager = new EmployeeManager();
         if(employeeManager.find(1) == null) {
-            employeeManager.createEmployee("admin", "admin", "male", "0912", "Qom", role.bankManager, 0, "admin@bank.com", 1, new Date(), "123456", errorMessage);
+            if(!employeeManager.createEmployee("admin", "admin", "10000000", "male", "0912", "Qom", role.bankManager, 0, "admin@bank.com", 1, new Date(), "123456", errorMessage)) {
+                JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
         EventQueue.invokeLater(new Runnable() {

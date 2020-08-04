@@ -51,21 +51,21 @@ public class LoginFrame extends JFrame {
         this.setTitle("Login");
         this.getContentPane().setLayout(null);
 
-        lblUsername = new JLabel("Username:");
-        lblUsername.setBounds(69, 47, 63, 14);
+        lblUsername = new JLabel("National Code:");
+        lblUsername.setBounds(69, 47, 90, 14);
         this.getContentPane().add(lblUsername);
 
         lblPassword = new JLabel("Password:");
-        lblPassword.setBounds(69, 104, 63, 14);
+        lblPassword.setBounds(69, 104, 120, 14);
         this.getContentPane().add(lblPassword);
 
         username = new JTextField();
-        username.setBounds(142, 44, 108, 20);
+        username.setBounds(165, 44, 108, 20);
         this.getContentPane().add(username);
         username.setColumns(10);
 
         password = new JPasswordField();
-        password.setBounds(142, 101, 108, 20);
+        password.setBounds(165, 101, 108, 20);
         this.getContentPane().add(password);
 
         // rdbtnAdmin = new JRadioButton("Manager");
@@ -88,6 +88,7 @@ public class LoginFrame extends JFrame {
 
         btnLogin = new JButton("Login");
         btnLogin.setBounds(69, 207, 89, 23);
+        btnLogin.addActionListener(new BtnLoginClickListener());
         this.getContentPane().add(btnLogin);
 
         btnReset = new JButton("Reset");
@@ -97,8 +98,6 @@ public class LoginFrame extends JFrame {
         btnExit = new JButton("Exit");
         btnExit.setBounds(311, 207, 89, 23);
         this.getContentPane().add(btnExit);
-
-        btnLogin.addActionListener(new BtnLoginClickListener());
     }
 
     private class BtnLoginClickListener implements ActionListener {
@@ -114,6 +113,7 @@ public class LoginFrame extends JFrame {
             if (rdbtnEmployee.isSelected()) {
                 EmployeeManager employeeManager = new EmployeeManager();
                 Employee employee = employeeManager.login(username.getText(), password.getText(), errorMessage);
+
                 if (employee == null) {
                     JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
                     return;
