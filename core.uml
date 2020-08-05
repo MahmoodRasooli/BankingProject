@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>banking.core</OriginalElement>
+  <nodes>
+    <node x="621.0520833333333" y="79.0">banking.core.ClientManager</node>
+    <node x="1443.21875" y="0.0">banking.core.UserManager</node>
+    <node x="353.47018502331036" y="536.0">banking.core.AccountManager</node>
+    <node x="192.71875" y="970.0">banking.core.AccountRequestManager</node>
+    <node x="1046.71875" y="960.0">banking.core.TransactionRequestManager</node>
+    <node x="0.0" y="1212.0">banking.core.FileManager</node>
+    <node x="657.9645833333333" y="0.0">banking.core.EntityType</node>
+    <node x="617.71875" y="927.0">banking.core.TransactionManager</node>
+    <node x="556.4214015151515" y="1553.0">banking.core.EmployeeManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="banking.core.AccountRequestManager" target="banking.core.AccountManager">
+      <point x="147.375" y="-69.5" />
+      <point x="536.59375" y="907.0" />
+      <point x="484.37018502331034" y="907.0" />
+      <point x="-56.10000000000002" y="145.5" />
+    </edge>
+    <edge source="banking.core.ClientManager" target="banking.core.FileManager">
+      <point x="-252.08333333333334" y="178.5" />
+      <point x="643.9687499999999" y="466.0" />
+      <point x="101.1875" y="466.0" />
+      <point x="101.1875" y="1192.0" />
+      <point x="67.3125" y="1192.0" />
+      <point x="-112.1875" y="-125.5" />
+    </edge>
+    <edge source="banking.core.AccountRequestManager" target="banking.core.EmployeeManager">
+      <point x="0.0" y="69.5" />
+      <point x="389.21875" y="1172.0" />
+      <point x="435.3032998251746" y="1172.0" />
+      <point x="435.3032998251746" y="1513.0" />
+      <point x="681.9983245920746" y="1513.0" />
+      <point x="-200.92307692307702" y="-189.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.TransactionRequestManager">
+      <point x="157.0625" y="-125.5" />
+      <point x="336.5625" y="1192.0" />
+      <point x="1098.8854166666667" y="1192.0" />
+      <point x="-104.33333333333333" y="79.5" />
+    </edge>
+    <edge source="banking.core.TransactionRequestManager" target="banking.core.EmployeeManager">
+      <point x="0.0" y="79.5" />
+      <point x="1203.21875" y="1192.0" />
+      <point x="1237.59231497669" y="1192.0" />
+      <point x="1237.59231497669" y="1493.0" />
+      <point x="983.3829399766898" y="1493.0" />
+      <point x="100.46153846153834" y="-189.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.AccountRequestManager">
+      <point x="67.3125" y="-125.5" />
+      <point x="246.8125" y="1192.0" />
+      <point x="258.21875" y="1192.0" />
+      <point x="-131.0" y="69.5" />
+    </edge>
+    <edge source="banking.core.AccountManager" target="banking.core.FileManager">
+      <point x="-130.89999999999998" y="145.5" />
+      <point x="409.5701850233104" y="907.0" />
+      <point x="134.1875" y="907.0" />
+      <point x="134.1875" y="1182.0" />
+      <point x="201.9375" y="1182.0" />
+      <point x="22.4375" y="-125.5" />
+    </edge>
+    <edge source="banking.core.AccountManager" target="banking.core.ClientManager">
+      <point x="0.0" y="-145.5" />
+      <point x="540.4701850233104" y="506.0" />
+      <point x="827.3020833333333" y="506.0" />
+      <point x="-68.75" y="178.5" />
+    </edge>
+    <edge source="banking.core.AccountManager" target="banking.core.EntityType">
+      <point x="-124.66666666666669" y="-145.5" />
+      <point x="415.8035183566437" y="456.0" />
+      <point x="477.05208333333337" y="456.0" />
+      <point x="477.05208333333337" y="59.0" />
+      <point x="701.4645833333333" y="59.0" />
+      <point x="-14.5" y="14.5" />
+    </edge>
+    <edge source="banking.core.TransactionManager" target="banking.core.ClientManager">
+      <point x="51.125" y="-112.5" />
+      <point x="873.34375" y="907.0" />
+      <point x="918.96875" y="907.0" />
+      <point x="22.916666666666742" y="178.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.EmployeeManager">
+      <point x="89.75" y="125.5" />
+      <point x="269.25" y="1523.0" />
+      <point x="631.7675553613053" y="1523.0" />
+      <point x="-251.1538461538463" y="-189.5" />
+    </edge>
+    <edge source="banking.core.TransactionManager" target="banking.core.AccountManager">
+      <point x="-51.125" y="-112.5" />
+      <point x="771.09375" y="867.0" />
+      <point x="633.9701850233103" y="867.0" />
+      <point x="93.49999999999989" y="145.5" />
+    </edge>
+    <edge source="banking.core.EmployeeManager" target="banking.core.FileManager">
+      <point x="-301.3846153846156" y="-189.5" />
+      <point x="581.536786130536" y="1533.0" />
+      <point x="89.75" y="1533.0" />
+      <point x="-89.75" y="125.5" />
+    </edge>
+    <edge source="banking.core.TransactionRequestManager" target="banking.core.ClientManager">
+      <point x="39.125" y="-79.5" />
+      <point x="1242.34375" y="907.0" />
+      <point x="1275.96875" y="907.0" />
+      <point x="1275.96875" y="516.0" />
+      <point x="1010.6354166666667" y="516.0" />
+      <point x="114.58333333333348" y="178.5" />
+    </edge>
+    <edge source="banking.core.EmployeeManager" target="banking.core.EntityType">
+      <point x="301.3846153846155" y="-189.5" />
+      <point x="1184.306016899767" y="1533.0" />
+      <point x="1392.21875" y="1533.0" />
+      <point x="1392.21875" y="49.0" />
+      <point x="759.4645833333334" y="49.0" />
+      <point x="43.50000000000006" y="14.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.EntityType">
+      <point x="-157.0625" y="-125.5" />
+      <point x="22.4375" y="1182.0" />
+      <point x="90.1875" y="1182.0" />
+      <point x="90.1875" y="49.0" />
+      <point x="672.4645833333333" y="49.0" />
+      <point x="-43.5" y="14.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.TransactionManager">
+      <point x="112.1875" y="-125.5" />
+      <point x="291.6875" y="1182.0" />
+      <point x="685.8854166666667" y="1182.0" />
+      <point x="-136.33333333333326" y="112.5" />
+    </edge>
+    <edge source="banking.core.ClientManager" target="banking.core.EntityType">
+      <point x="0.0" y="-178.5" />
+      <point x="896.0520833333333" y="59.0" />
+      <point x="730.4645833333334" y="59.0" />
+      <point x="14.500000000000057" y="14.5" />
+    </edge>
+    <edge source="banking.core.TransactionRequestManager" target="banking.core.AccountManager">
+      <point x="-117.375" y="-79.5" />
+      <point x="1085.84375" y="857.0" />
+      <point x="671.3701850233102" y="857.0" />
+      <point x="130.89999999999986" y="145.5" />
+    </edge>
+    <edge source="banking.core.ClientManager" target="banking.core.EmployeeManager">
+      <point x="252.0833333333336" y="178.5" />
+      <point x="1148.135416666667" y="486.0" />
+      <point x="1381.21875" y="486.0" />
+      <point x="1381.21875" y="1523.0" />
+      <point x="1134.0752476689977" y="1523.0" />
+      <point x="251.1538461538462" y="-189.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.AccountManager">
+      <point x="-22.4375" y="-125.5" />
+      <point x="157.0625" y="1192.0" />
+      <point x="123.1875" y="1192.0" />
+      <point x="123.1875" y="897.0" />
+      <point x="372.1701850233104" y="897.0" />
+      <point x="-168.29999999999995" y="145.5" />
+    </edge>
+    <edge source="banking.core.TransactionManager" target="banking.core.EmployeeManager">
+      <point x="0.0" y="112.5" />
+      <point x="822.21875" y="1182.0" />
+      <point x="868.3032998251746" y="1182.0" />
+      <point x="868.3032998251746" y="1533.0" />
+      <point x="882.9214015151515" y="1533.0" />
+      <point x="0.0" y="-189.5" />
+    </edge>
+    <edge source="banking.core.AccountManager" target="banking.core.EmployeeManager">
+      <point x="18.699999999999932" y="145.5" />
+      <point x="559.1701850233103" y="887.0" />
+      <point x="607.21875" y="887.0" />
+      <point x="607.21875" y="1483.0" />
+      <point x="832.6906322843822" y="1483.0" />
+      <point x="-50.23076923076928" y="-189.5" />
+    </edge>
+    <edge source="banking.core.AccountRequestManager" target="banking.core.ClientManager">
+      <point x="-49.125" y="-69.5" />
+      <point x="340.09375" y="887.0" />
+      <point x="284.17564831002335" y="887.0" />
+      <point x="284.17564831002335" y="496.0" />
+      <point x="781.46875" y="496.0" />
+      <point x="-114.58333333333331" y="178.5" />
+    </edge>
+    <edge source="banking.core.FileManager" target="banking.core.ClientManager">
+      <point x="-67.3125" y="-125.5" />
+      <point x="112.1875" y="476.0" />
+      <point x="689.8020833333333" y="476.0" />
+      <point x="-206.25" y="178.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="184.0" y="199.5" />
+  <SelectedNodes>
+    <node>banking.core.ClientManager</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

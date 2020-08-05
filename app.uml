@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>banking.app</OriginalElement>
+  <nodes>
+    <node x="560.0" y="0.0">banking.app.Main</node>
+    <node x="160.00000000000003" y="708.0">banking.app.LoginFrame</node>
+    <node x="358.0" y="121.0">banking.app.ClientFrame</node>
+    <node x="181.0" y="143.0">banking.app.EmployeeFrame</node>
+    <node x="143.50000000000003" y="605.0">banking.app.LoginFrame.BtnLoginClickListener</node>
+    <node x="0.0" y="0.0">banking.app.ManagerFrame</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="banking.app.LoginFrame.BtnLoginClickListener" target="banking.app.ManagerFrame">
+      <point x="-58.0" y="-26.5" />
+      <point x="201.50000000000003" y="575.0" />
+      <point x="120.75" y="575.0" />
+      <point x="40.25" y="277.5" />
+    </edge>
+    <edge source="banking.app.LoginFrame.BtnLoginClickListener" target="banking.app.LoginFrame">
+      <point x="0.0" y="26.5" />
+      <point x="1.4210854715202004E-14" y="-167.5" />
+    </edge>
+    <edge source="banking.app.LoginFrame.BtnLoginClickListener" target="banking.app.ClientFrame">
+      <point x="96.66666666666663" y="-26.5" />
+      <point x="356.16666666666663" y="585.0" />
+      <point x="475.75" y="585.0" />
+      <point x="39.25" y="156.5" />
+    </edge>
+    <edge source="banking.app.LoginFrame.BtnLoginClickListener" target="banking.app.EmployeeFrame">
+      <point x="19.333333333333314" y="-26.5" />
+      <point x="278.83333333333337" y="585.0" />
+      <point x="298.75" y="585.0" />
+      <point x="39.25" y="134.5" />
+    </edge>
+    <edge source="banking.app.LoginFrame" target="banking.app.LoginFrame.BtnLoginClickListener">
+      <point x="-66.33333333333331" y="-167.5" />
+      <point x="193.1666666666667" y="683.0" />
+      <point x="182.1666666666667" y="683.0" />
+      <point x="-77.33333333333331" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="117.5" y="545.0" />
+  <SelectedNodes>
+    <node>banking.app.Main</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

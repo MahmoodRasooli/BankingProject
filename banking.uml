@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>banking</OriginalElement>
+  <nodes>
+    <node x="88.37351190476193" y="208.0">banking.app</node>
+    <node x="40.0" y="99.0">banking.core</node>
+    <node x="33.78333333333333" y="0.0">banking.model</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="banking.app" target="banking.model">
+      <point x="35.66666666666666" y="-14.5" />
+      <point x="177.54017857142858" y="188.0" />
+      <point x="164.5" y="188.0" />
+      <point x="164.5" y="79.0" />
+      <point x="146.14047619047616" y="79.0" />
+      <point x="51.85714285714283" y="14.5" />
+    </edge>
+    <edge source="banking.app" target="banking.core">
+      <point x="-35.66666666666666" y="-14.5" />
+      <point x="106.20684523809527" y="188.0" />
+      <point x="119.80000000000001" y="188.0" />
+      <point x="22.80000000000001" y="14.5" />
+    </edge>
+    <edge source="banking.model" target="banking.model">
+      <point x="-51.85714285714286" y="14.5" />
+      <point x="42.42619047619047" y="49.0" />
+      <point x="13.783333333333331" y="49.0" />
+      <point x="13.783333333333331" y="21.75" />
+      <point x="-60.5" y="7.25" />
+    </edge>
+    <edge source="banking.core" target="banking.model">
+      <point x="42.75" y="-14.5" />
+      <point x="139.75" y="79.0" />
+      <point x="128.8547619047619" y="79.0" />
+      <point x="34.571428571428555" y="14.5" />
+    </edge>
+    <edge source="banking.core" target="banking.core">
+      <point x="-22.799999999999997" y="14.5" />
+      <point x="74.2" y="158.0" />
+      <point x="10.0" y="158.0" />
+      <point x="10.0" y="113.5" />
+      <point x="-57.0" y="-0.0" />
+    </edge>
+    <edge source="banking.app" target="banking.app">
+      <point x="26.75" y="14.5" />
+      <point x="168.62351190476193" y="267.0" />
+      <point x="58.373511904761926" y="267.0" />
+      <point x="58.373511904761926" y="215.25" />
+      <point x="-53.5" y="-7.25" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="60.5" y="88.5" />
+  <SelectedNodes>
+    <node>banking.app</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
