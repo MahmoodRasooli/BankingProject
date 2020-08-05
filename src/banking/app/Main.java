@@ -5,9 +5,7 @@ import banking.model.Account;
 import banking.model.AccountStatus;
 import banking.model.Client;
 import banking.model.Employee;
-import banking.model.Transaction;
 import banking.model.role;
-import banking.model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +30,7 @@ public class Main {
             return;
 
         boolean continueCommand = true;
-        while (!continueCommand) {
+        while (continueCommand) {
             continueCommand = login();
         }
     }// end of main
@@ -40,8 +38,8 @@ public class Main {
     private static boolean initiateApplication() {
         StringBuilder errorMessage = new StringBuilder();
         if (!FileManager.initiateFiles(errorMessage)) {
-            System.out.print(errorMessage);
-            System.out.print("Press any key to exit...");
+            System.out.println(errorMessage);
+            System.out.println("Press any key to exit...");
             Scanner scanner = new Scanner(System.in);
             scanner.next();
             scanner.close();
@@ -57,7 +55,7 @@ public class Main {
         if (_employeeManager.find(1) == null) {
             if (!_employeeManager.createEmployee("admin", "admin", "10000000", "male", "0912", "Qom", role.bankManager,
                     0, "admin@bank.com", 1, new Date(), "123456", errorMessage)) {
-                System.out.print(errorMessage);
+                System.out.println(errorMessage);
                 return true;
             }
         }
@@ -80,16 +78,16 @@ public class Main {
         }
 
         clearScreen();
-        System.out.print("National Code: ");
+        System.out.println("National Code: ");
         String nationalCode = input.next();
-        System.out.print("Password: ");
+        System.out.println("Password: ");
         String password = input.next();
         input.close();
 
         if (option.equals("1")) {
             Employee employee = _employeeManager.login(nationalCode, password, errorMessage);
             if (employee == null) {
-                System.out.print(errorMessage);
+                System.out.println(errorMessage);
                 return true;
             } else {
                 _currentUserId = employee.getId();
@@ -104,7 +102,7 @@ public class Main {
         } else if (option.equals("2")) {
             Client client = _clientManager.login(nationalCode, password, errorMessage);
             if (client == null) {
-                System.out.print(errorMessage);
+                System.out.println(errorMessage);
                 return true;
             } else {
                 _currentUserId = client.getId();
@@ -121,14 +119,77 @@ public class Main {
     /////////////////////////////////////////////////////// Employee Actions ///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void employee_ShowActions() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
         System.out.println("Bank employee panel");
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Transfer");
-        System.out.println("4. Find clients");
+        System.out.println("4. Find client");
         System.out.println("5. Show all clients");
         System.out.println("6. Find account");
         System.out.println("7. Show all accounts");
+
+        String option = input.next();
+        input.close();
+
+        if (option.equals("1")) {
+            employee_Deposit();
+        }
+        if (option.equals("2")) {
+            employee_Withdraw();
+        }
+        if (option.equals("3")) {
+            employee_Transfer();
+        }
+        if (option.equals("4")) {
+            employee_FindClient();
+        }
+        if (option.equals("5")) {
+            employee_ShowAllClients();
+        }
+        if (option.equals("6")) {
+            employee_FindAccount();
+        }
+        if (option.equals("7")) {
+            employee_ShowAllAccounts();
+        }
+    }
+
+    private static void employee_Deposit() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.println("account number: ");
+        int accountNumber = Integer.parseInt(input.next());
+        System.out.println("client Id: ");
+        int clientId = Integer.parseInt(input.next());
+        System.out.println("employee Id: ");
+        int employeeId = Integer.parseInt(input.next());
+        System.out.println("");
+    }
+
+    private static void employee_Withdraw(){
+
+    }
+
+    private static void employee_Transfer(){
+
+    }
+
+    private static void employee_FindClient(){
+
+    }
+
+    private static void employee_ShowAllClients(){
+
+    }
+
+    private static void employee_FindAccount(){
+
+    }
+
+    private static void employee_ShowAllAccounts(){
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +274,7 @@ public class Main {
 
         int index = 1;
         for(Employee item: employees) {
-            System.out.print(String.format("%d. %s", index, item.toString()));
+            System.out.println(String.format("%d. %s", index, item.toString()));
             index++;
         }
     }
@@ -226,19 +287,19 @@ public class Main {
         String option = input.next();
 
         if (option.equals("1")) {
-            System.out.print("National code: ");
+            System.out.println("National code: ");
             String findEmployeeNationalCode = input.next();
             if (_employeeManager.findByNationalCode(findEmployeeNationalCode) != null) {
-                System.out.print(_employeeManager.findByNationalCode(findEmployeeNationalCode).toString());
+                System.out.println(_employeeManager.findByNationalCode(findEmployeeNationalCode).toString());
             } else {
                 System.out.println("Cannot find the entered national code");
             }
         }
         if (option.equals("2")) {
-            System.out.print("Id");
+            System.out.println("Id:");
             int findEmployeeId = Integer.parseInt(input.next());
             if (_employeeManager.find(findEmployeeId) != null) {
-                System.out.print(_employeeManager.find(findEmployeeId).toString());
+                System.out.println(_employeeManager.find(findEmployeeId).toString());
             } else {
                 System.out.println("Cannot find the entered Id");
             }
@@ -255,19 +316,19 @@ public class Main {
         String option = input.next();
         
         if (option.equals("1")) {
-            System.out.print("National code: ");
+            System.out.println("National code: ");
             String findClientNationalCode = input.next();
             if (_clientManager.findByNationalCode(findClientNationalCode) != null) {
-                System.out.print(_clientManager.findByNationalCode(findClientNationalCode).toString());
+                System.out.println(_clientManager.findByNationalCode(findClientNationalCode).toString());
             } else {
                 System.out.println("Cannot find the entered national code");
             }
         }
         if (option.equals("2")) {
-            System.out.print("Id");
+            System.out.println("Id");
             int findClientId = Integer.parseInt(input.next());
             if (_clientManager.find(findClientId) != null) {
-                System.out.print(_clientManager.find(findClientId).toString());
+                System.out.println(_clientManager.find(findClientId).toString());
             } else {
                 System.out.println("Cannot find the entered Id");
             }
@@ -279,7 +340,7 @@ public class Main {
     private static void manager_DeleteAccount() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Account number: ");
+        System.out.println("Account number: ");
         int accountNumber = Integer.parseInt(input.next());
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -296,7 +357,7 @@ public class Main {
     private static void manager_DeleteClient() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Id: ");
+        System.out.println("Id: ");
         int Id = Integer.parseInt(input.next());
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -313,7 +374,7 @@ public class Main {
     private static void manager_DeleteEmployee() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Id: ");
+        System.out.println("Id: ");
         int Id = Integer.parseInt(input.next());
         StringBuilder errorMessage = new StringBuilder();
         input.close();
@@ -330,13 +391,13 @@ public class Main {
     private static void manager_UpdateAccount() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Account number: ");
+        System.out.println("Account number: ");
         int accountNumber = input.nextInt();
-        System.out.print("Balance: ");
+        System.out.println("Balance: ");
         long balance = input.nextByte();
-        System.out.print("Type(Current / Deposit): ");
+        System.out.println("Type(Current / Deposit): ");
         String type = input.next();
-        System.out.print("Account status(1. Active / 2. Closed / 3. Suspended): ");
+        System.out.println("Account status(1. Active / 2. Closed / 3. Suspended): ");
         String accountStatus = input.next();
         StringBuilder errorMessage = new StringBuilder();
         input.close();
@@ -357,23 +418,23 @@ public class Main {
         clearScreen();
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Id: ");
+        System.out.println("Id: ");
         int Id = input.nextInt();
-        System.out.print("First name: ");
+        System.out.println("First name: ");
         String clientFirstName = input.next();
-        System.out.print("Last Name: ");
+        System.out.println("Last Name: ");
         String clientLastName = input.next();
-        System.out.print("Gender: ");
+        System.out.println("Gender: ");
         String clientGender = input.next();
-        System.out.print("Phone number: ");
+        System.out.println("Phone number: ");
         String clientPhoneNumber = input.next();
-        System.out.print("Address: ");
+        System.out.println("Address: ");
         String clientAddress = input.next();
-        System.out.print("Email: ");
+        System.out.println("Email: ");
         String clientEmail = input.next();
-        System.out.print("National Code: ");
+        System.out.println("National Code: ");
         String clientNationalCode = input.next();
-        System.out.print("Password: ");
+        System.out.println("Password: ");
         String clientPassword = input.next();
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -391,25 +452,25 @@ public class Main {
     private static void manager_UpdateEmployee() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Id: ");
+        System.out.println("Id: ");
         int Id = input.nextInt();
-        System.out.print("First name: ");
+        System.out.println("First name: ");
         String employeeFirstName = input.next();
-        System.out.print("Last Name: ");
+        System.out.println("Last Name: ");
         String employeeLastName = input.next();
-        System.out.print("National Code: ");
+        System.out.println("National Code: ");
         String employeeNationalCode = input.next();
-        System.out.print("Gender: ");
+        System.out.println("Gender: ");
         String employeeGender = input.next();
-        System.out.print("Phone number: ");
+        System.out.println("Phone number: ");
         String employeePhoneNumber = input.next();
-        System.out.print("Address: ");
+        System.out.println("Address: ");
         String employeeAddress = input.next();
-        System.out.print("Salary: ");
+        System.out.println("Salary: ");
         long employeeSalary = input.nextByte();
-        System.out.print("Email: ");
+        System.out.println("Email: ");
         String employeeEmail = input.next();
-        System.out.print("Password: ");
+        System.out.println("Password: ");
         String employeePassword = input.next();
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -428,23 +489,23 @@ public class Main {
     private static void manager_AddEmployee() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("First name: ");
+        System.out.println("First name: ");
         String employeeFirstName = input.next();
-        System.out.print("Last Name: ");
+        System.out.println("Last Name: ");
         String employeeLastName = input.next();
-        System.out.print("National Code: ");
+        System.out.println("National Code: ");
         String employeeNationalCode = input.next();
-        System.out.print("Gender: ");
+        System.out.println("Gender: ");
         String employeeGender = input.next();
-        System.out.print("Phone number: ");
+        System.out.println("Phone number: ");
         String employeePhoneNumber = input.next();
-        System.out.print("Address: ");
+        System.out.println("Address: ");
         String employeeAddress = input.next();
-        System.out.print("Salary: ");
+        System.out.println("Salary: ");
         long employeeSalary = input.nextByte();
-        System.out.print("Email: ");
+        System.out.println("Email: ");
         String employeeEmail = input.next();
-        System.out.print("Password: ");
+        System.out.println("Password: ");
         String employeePassword = input.next();
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -461,21 +522,21 @@ public class Main {
     private static void manager_AddClient() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("First name: ");
+        System.out.println("First name: ");
         String clientFirstName = input.next();
-        System.out.print("Last Name: ");
+        System.out.println("Last Name: ");
         String clientLastName = input.next();
-        System.out.print("Gender: ");
+        System.out.println("Gender: ");
         String clientGender = input.next();
-        System.out.print("Phone number: ");
+        System.out.println("Phone number: ");
         String clientPhoneNumber = input.next();
-        System.out.print("Address: ");
+        System.out.println("Address: ");
         String clientAddress = input.next();
-        System.out.print("Email: ");
+        System.out.println("Email: ");
         String clientEmail = input.next();
-        System.out.print("National Code: ");
+        System.out.println("National Code: ");
         String clientNationalCode = input.next();
-        System.out.print("Password: ");
+        System.out.println("Password: ");
         String clientPassword = input.next();
         input.close();
 
@@ -491,11 +552,11 @@ public class Main {
     private static void manager_AddAccount() {
         clearScreen();
         Scanner input = new Scanner(System.in);
-        System.out.print("Client Id: ");
+        System.out.println("Client Id: ");
         int clientId = input.nextInt();
-        System.out.print("Initial amount: ");
+        System.out.println("Initial amount: ");
         long initialAmount = input.nextByte();
-        System.out.print("Type(Current / Deposit): ");
+        System.out.println("Type(Current / Deposit): ");
         String type = input.next();
         input.close();
         StringBuilder errorMessage = new StringBuilder();
@@ -528,11 +589,11 @@ public class Main {
 
             if(option1.equals("1")){
                 clearScreen();
-                System.out.print("Client Id: ");
+                System.out.println("Client Id: ");
                 int clientId = input.nextInt();
-                System.out.print("Initial amount: ");
+                System.out.println("Initial amount: ");
                 long initialAmount = input.nextByte();
-                System.out.print("Type(Current / Deposit): ");
+                System.out.println("Type(Current / Deposit): ");
                 String type = input.next();
                 if(_accountManager.create(clientId, initialAmount, 1, type, errorMessage)){
                     System.out.println("Account successfully created!");
@@ -545,7 +606,7 @@ public class Main {
             }
             if(option1.equals("2")){
                 clearScreen();
-                System.out.print("Account number: ");
+                System.out.println("Account number: ");
                 int accountNumber = Integer.parseInt(input.next());
                 if(_accountManager.delete(accountNumber, errorMessage)){
                     System.out.println("Account successfully deleted");
@@ -558,24 +619,24 @@ public class Main {
             }
             if(option1.equals("3")){
                 clearScreen();
-                System.out.print("Id: ");
+                System.out.println("Id: ");
                 int Id = Integer.parseInt(input.next());
                 for(Account item : _accountManager.getAll()){
                     if(item.getClientId() == Id){
-                        System.out.print(item.toString());
+                        System.out.println(item.toString());
                         return;
                     }
                     else {
-                        System.out.print("Id not found");
+                        System.out.println("Id not found");
                         return;
                     }
                 }
             }
             if(option1.equals("4")){
                 clearScreen();
-                System.out.print("Enter your account Number: ");
+                System.out.println("Enter your account Number: ");
                 int sourceAccountNumber = Integer.parseInt(input.next());
-                System.out.print("Enter your target account numbers: ");
+                System.out.println("Enter your target account numbers: ");
                 ArrayList<Integer> targetAccountNumbers = new ArrayList<>();
                 targetAccountNumbers.add(Integer.parseInt(input.next()));
             }
