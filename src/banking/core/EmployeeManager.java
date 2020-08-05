@@ -56,8 +56,29 @@ public class EmployeeManager {
         return true;
     }
 
-    public boolean update(String firstName, String lastName, String gender, String phoneNumber, String address,
-            String email, Date birthdate, String nationalCode, String password, long salary) {
+    public boolean update(int Id, String firstName, String lastName, String gender, String phoneNumber, String address,
+            String email, Date birthdate, String nationalCode, String password, long salary, StringBuilder errorMessage) {
+        if (!checkIfEmployeeIsValid(Id, errorMessage))
+            return false;
+
+        Employee employee = find(Id);
+
+        employee.setAddress(address);
+        employee.setBirthdate(birthdate);
+        employee.setCreateDate(new Date());
+        employee.setEmail(email);
+        employee.setFirstName(firstName);
+        employee.setGender(gender);
+        employee.setIsDeleted(false);
+        employee.setLastName(lastName);
+        employee.setPassword(password);
+        employee.setPhoneNumber(phoneNumber);
+        employee.setId(getNewEmployeeId());
+        employee.setNationalCode(nationalCode);
+
+        if (!FileManager.writeToFile(_repository, EntityType.Employee, errorMessage))
+            return false;
+
         return true;
     }
 
@@ -65,7 +86,7 @@ public class EmployeeManager {
         return _repository;
     }
 
-    public ArrayList<Employee> sortByFirstNameAndLastName(ArrayList<Employee> repository) {
+    public ArrayList<Employee> sortByFirstNameAndLastName() {
 
         ArrayList<Employee> sortedRepository = new ArrayList<>(_repository);
         sortedRepository.sort(new Comparator<Employee>() {

@@ -2,12 +2,10 @@ package banking.core;
 
 import banking.model.Account;
 import banking.model.Client;
+import banking.model.Employee;
 import banking.model.role;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClientManager {
@@ -27,24 +25,21 @@ public class ClientManager {
     // Returns a list which contains all the clients
     public ArrayList<Client> getAll() { return new ArrayList<Client>(_repository); }
 
-    public ArrayList<Client> sortAll(ArrayList<Client> repository) {
+    public ArrayList<Client> sortByFirstNameAndLastName() {
 
-        ArrayList<Client> sortedRepository = new ArrayList<>();
-        ArrayList<String> clientNames = repository.stream().map(item -> item.getFirstName() + item.getLastName()).sorted().collect(Collectors.toCollection(ArrayList::new));
-        repository.forEach(item -> {
-            clientNames.stream().filter(str -> str.equals(item.getFirstName() + item.getLastName())).map(str -> findByFirstAndLastName(item.getFirstName(), item.getLastName())).forEach(sortedRepository::add);
+        ArrayList<Client> sortedRepository = new ArrayList<>(_repository);
+        sortedRepository.sort(new Comparator<Client>() {
+            @Override
+            public int compare(final Client lhs, Client rhs) {
+                if (lhs.getFirstName().compareTo(rhs.getFirstName()) == 0) {
+                    return lhs.getLastName().compareTo(rhs.getLastName());
+                } else {
+                    return lhs.getFirstName().compareTo(rhs.getFirstName());
+                }
+            }
         });
+
         return sortedRepository;
-    }
-
-    // Find a client by his/her first name and last name
-    public Client findByFirstAndLastName(String firstName, String lastName) {
-
-        for (Client item : _repository) {
-            if (item.getFirstName().equals(firstName) && item.getLastName().equals(lastName))
-                return item;
-        }
-        return null;
     }
 
     // Find a client by Id
