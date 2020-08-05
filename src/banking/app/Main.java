@@ -5,6 +5,7 @@ import banking.model.Account;
 import banking.model.AccountStatus;
 import banking.model.Client;
 import banking.model.Employee;
+import banking.model.Transaction;
 import banking.model.role;
 
 import java.util.ArrayList;
@@ -116,7 +117,8 @@ public class Main {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////// Employee Actions ///////////////////////////////////////////////////
+    /////////////////////////////////////////////////////// Employee Actions
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void employee_ShowActions() {
         System.out.println("Bank employee panel");
@@ -130,7 +132,8 @@ public class Main {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////// Manager Actions ///////////////////////////////////////////////////
+    /////////////////////////////////////////////////////// Manager Actions
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void manager_ShowActions() {
         clearScreen();
@@ -210,7 +213,7 @@ public class Main {
         ArrayList<Employee> employees = _employeeManager.getAll();
 
         int index = 1;
-        for(Employee item: employees) {
+        for (Employee item : employees) {
             System.out.print(String.format("%d. %s", index, item.toString()));
             index++;
         }
@@ -251,7 +254,7 @@ public class Main {
         System.out.println("1. Find by national code");
         System.out.println("2. Find by Id");
         String option = input.next();
-        
+
         if (option.equals("1")) {
             System.out.print("National code: ");
             String findClientNationalCode = input.next();
@@ -270,7 +273,7 @@ public class Main {
                 System.out.println("Cannot find the entered Id");
             }
         }
-        
+
         input.close();
     }
 
@@ -508,89 +511,121 @@ public class Main {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////// Client Actions /////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////// Client Actions
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void client_ShowActions() {
-            clearScreen();
+        clearScreen();
         Scanner input = new Scanner(System.in);
 
-            System.out.println("Client panel");
-            System.out.println("1. Create Account");
-            System.out.println("2. Close account");
-            System.out.println("3. Show account");
-            System.out.println("4. Schedule");
-            System.out.println("5. Transfer request");
-            System.out.println("6. Show transactions of an account");
-            String option1 = input.next();
-            StringBuilder errorMessage = new StringBuilder();
+        System.out.println("Client panel");
+        System.out.println("1. Create Account");
+        System.out.println("2. Close account");
+        System.out.println("3. Show account");
+        System.out.println("4. Schedule");
+        System.out.println("5. Transfer request");
+        System.out.println("6. Show transactions of an account");
+        String option = input.next();
+        input.close();
 
-            if(option1.equals("1")){
-                clearScreen();
-                System.out.print("Client Id: ");
-                int clientId = input.nextInt();
-                System.out.print("Initial amount: ");
-                long initialAmount = input.nextByte();
-                System.out.print("Type(Current / Deposit): ");
-                String type = input.next();
-                if(_accountManager.create(clientId, initialAmount, 1, type, errorMessage)){
-                    System.out.println("Account successfully created!");
-                    return;
-                }
-                else {
-                    System.out.println(errorMessage);
-                    return;
-                }
-            }
-            if(option1.equals("2")){
-                clearScreen();
-                System.out.print("Account number: ");
-                int accountNumber = Integer.parseInt(input.next());
-                if(_accountManager.delete(accountNumber, errorMessage)){
-                    System.out.println("Account successfully deleted");
-                    return;
-                }
-                else {
-                    System.out.println(errorMessage);
-                    return;
-                }
-            }
-            if(option1.equals("3")){
-                clearScreen();
-                System.out.print("Id: ");
-                int Id = Integer.parseInt(input.next());
-                for(Account item : _accountManager.getAll()){
-                    if(item.getClientId() == Id){
-                        System.out.print(item.toString());
-                        return;
-                    }
-                    else {
-                        System.out.print("Id not found");
-                        return;
-                    }
-                }
-            }
-            if(option1.equals("4")){
-                clearScreen();
-                System.out.print("Enter your account Number: ");
-                int sourceAccountNumber = Integer.parseInt(input.next());
-                System.out.print("Enter your target account numbers: ");
-                ArrayList<Integer> targetAccountNumbers = new ArrayList<>();
-                targetAccountNumbers.add(Integer.parseInt(input.next()));
-            }
-            if(option1.equals("5")){
-                clearScreen();
-                if(_transactionRequestManager.createTransactionRequest()){
-                    System.out.println("Request successfully submitted");
-                    return;
-                }
-                else {
-                    System.out.println("Request not registered");
-                    return;
-                }
-            }
-            if(option1.equals("6")){
-                clearScreen();
-                _transactionManager.getAll();
-            }
+        if (option.equals("1")) {
+            client_CreateAccount();
+        }
+        if (option.equals("2")) {
+            client_CloseAccount();
+        }
+        if (option.equals("3")) {
+            client_ShowAccount();
+        }
+        if (option.equals("4")) {
+            client_SetSchedule();
+        }
+        if (option.equals("5")) {
+            client_TransferRequest();
+        }
+        if (option.equals("6")) {
+            client_ShowTransactions();
+        }
+    }
+
+    private static void client_ShowTransactions() {
+        clearScreen();
+        int index = 1;
+        for (Transaction item : _transactionManager.getClientTransactions(_currentUserId)) {
+            System.out.println(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
+    }
+
+    private static void client_TransferRequest() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        StringBuilder errorMessage = new StringBuilder();
+
+        if (_transactionRequestManager.createTransactionRequest()) {
+            System.out.println("Request successfully submitted");
+        } else {
+            System.out.println("Request not registered");
+        }
+
+        input.close();
+    }
+
+    private static void client_SetSchedule() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your account Number: ");
+        int sourceAccountNumber = Integer.parseInt(input.next());
+        System.out.print("Enter your target account numbers: ");
+        ArrayList<Integer> targetAccountNumbers = new ArrayList<>();
+        targetAccountNumbers.add(Integer.parseInt(input.next()));
+        input.close();
+    }
+
+    private static void client_ShowAccount() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Account number: ");
+        int accountNumber = Integer.parseInt(input.next());
+        input.close();
+        Account account = _accountManager.find(accountNumber);
+        if (account != null)
+            System.out.println();
+        else
+            System.out.println("Account not found");
+    }
+
+    private static void client_CloseAccount() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        int accountNumber = Integer.parseInt(input.next());
+        input.close();
+        StringBuilder errorMessage = new StringBuilder();
+
+        if (_accountManager.delete(accountNumber, errorMessage)) {
+            System.out.println("Account successfully deleted");
+        } else {
+            System.out.println(errorMessage);
+        }
+    }
+
+    private static void client_CreateAccount() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        clearScreen();
+        System.out.print("Client Id: ");
+        int clientId = input.nextInt();
+        System.out.print("Initial amount: ");
+        long initialAmount = input.nextByte();
+        System.out.print("Type(Current / Deposit): ");
+        String type = input.next();
+        input.close();
+        StringBuilder errorMessage = new StringBuilder();
+
+        if (_accountManager.create(clientId, initialAmount, 1, type, errorMessage)) {
+            System.out.println("Account successfully created!");
+        } else {
+            System.out.println(errorMessage);
+        }
     }
 }// end of class
