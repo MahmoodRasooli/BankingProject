@@ -6,6 +6,8 @@ import banking.model.AccountStatus;
 import banking.model.Client;
 import banking.model.Employee;
 import banking.model.role;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -15,6 +17,8 @@ public class Main {
     private static ClientManager _clientManager;
     private static EmployeeManager _employeeManager;
     private static AccountManager _accountManager;
+    private static TransactionManager _transactionManager;
+    private static TransactionRequestManager _transactionRequestManager;
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -25,9 +29,9 @@ public class Main {
         if (!initiateApplication())
             return;
 
-        boolean exitApplicaiton = false;
-        while (!exitApplicaiton) {
-            exitApplicaiton = login();
+        boolean continueCommand = true;
+        while (!continueCommand) {
+            continueCommand = login();
         }
     }// end of main
 
@@ -45,6 +49,8 @@ public class Main {
         _clientManager = new ClientManager();
         _employeeManager = new EmployeeManager();
         _accountManager = new AccountManager();
+        _transactionManager = new TransactionManager();
+        _transactionRequestManager = new TransactionRequestManager();
 
         if (_employeeManager.find(1) == null) {
             if (!_employeeManager.createEmployee("admin", "admin", "10000000", "male", "0912", "Qom", role.bankManager,
@@ -201,7 +207,13 @@ public class Main {
     }
 
     private static void manager_ShowAllEmployees() {
+        ArrayList<Employee> employees = _employeeManager.getAll();
 
+        int index = 1;
+        for(Employee item: employees) {
+            System.out.print(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
     }
 
     private static void manager_FindEmployee() {
@@ -499,9 +511,86 @@ public class Main {
     ////////////////////////////////////////////////////// Client Actions /////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void client_ShowActions() {
-        System.out.println("Client panel");
-        System.out.println("1. Create Account");
-        System.out.println("2. Close account");
-        System.out.println("3. Show account");
+            clearScreen();
+        Scanner input = new Scanner(System.in);
+
+            System.out.println("Client panel");
+            System.out.println("1. Create Account");
+            System.out.println("2. Close account");
+            System.out.println("3. Show account");
+            System.out.println("4. Schedule");
+            System.out.println("5. Transfer request");
+            System.out.println("6. Show transactions of an account");
+            String option1 = input.next();
+            StringBuilder errorMessage = new StringBuilder();
+
+            if(option1.equals("1")){
+                clearScreen();
+                System.out.print("Client Id: ");
+                int clientId = input.nextInt();
+                System.out.print("Initial amount: ");
+                long initialAmount = input.nextByte();
+                System.out.print("Type(Current / Deposit): ");
+                String type = input.next();
+                if(_accountManager.create(clientId, initialAmount, 1, type, errorMessage)){
+                    System.out.println("Account successfully created!");
+                    return;
+                }
+                else {
+                    System.out.println(errorMessage);
+                    return;
+                }
+            }
+            if(option1.equals("2")){
+                clearScreen();
+                System.out.print("Account number: ");
+                int accountNumber = Integer.parseInt(input.next());
+                if(_accountManager.delete(accountNumber, errorMessage)){
+                    System.out.println("Account successfully deleted");
+                    return;
+                }
+                else {
+                    System.out.println(errorMessage);
+                    return;
+                }
+            }
+            if(option1.equals("3")){
+                clearScreen();
+                System.out.print("Id: ");
+                int Id = Integer.parseInt(input.next());
+                for(Account item : _accountManager.getAll()){
+                    if(item.getClientId() == Id){
+                        System.out.print(item.toString());
+                        return;
+                    }
+                    else {
+                        System.out.print("Id not found");
+                        return;
+                    }
+                }
+            }
+            if(option1.equals("4")){
+                clearScreen();
+                System.out.print("Enter your account Number: ");
+                int sourceAccountNumber = Integer.parseInt(input.next());
+                System.out.print("Enter your target account numbers: ");
+                ArrayList<Integer> targetAccountNumbers = new ArrayList<>();
+                targetAccountNumbers.add(Integer.parseInt(input.next()));
+            }
+            if(option1.equals("5")){
+                clearScreen();
+                if(_transactionRequestManager.createTransactionRequest()){
+                    System.out.println("Request successfully submitted");
+                    return;
+                }
+                else {
+                    System.out.println("Request not registered");
+                    return;
+                }
+            }
+            if(option1.equals("6")){
+                clearScreen();
+                _transactionManager.getAll();
+            }
     }
 }// end of class

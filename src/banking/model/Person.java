@@ -111,4 +111,22 @@ public abstract class Person {
     public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "Id=" + Id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", createrUser=" + createrUser +
+                ", createDate=" + createDate +
+                ", birthdate=" + birthdate +
+                ", isDeleted=" + isDeleted +
+                ", nationalCode='" + nationalCode + '\'' +
+                '}';
+    }
 }
