@@ -1,11 +1,7 @@
 package banking.app;
 
 import banking.core.*;
-import banking.model.Account;
-import banking.model.AccountStatus;
-import banking.model.Client;
-import banking.model.Employee;
-import banking.model.role;
+import banking.model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,14 +115,190 @@ public class Main {
     /////////////////////////////////////////////////////// Employee Actions ///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static void employee_ShowActions() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
         System.out.println("Bank employee panel");
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Transfer");
-        System.out.println("4. Find clients");
+        System.out.println("4. Find client");
         System.out.println("5. Show all clients");
         System.out.println("6. Find account");
         System.out.println("7. Show all accounts");
+
+        String option = input.next();
+        input.close();
+
+        if (option.equals("1")){
+            employee_Deposit();
+        }
+        if (option.equals("2")){
+            employee_Withdraw();
+        }
+        if (option.equals("3")){
+            employee_Transfer();
+        }
+        if (option.equals("4")){
+            employee_FindClient();
+        }
+        if (option.equals("5")){
+            employee_ShowAllClients();
+        }
+        if (option.equals("6")){
+            employee_FindAccount();
+        }
+        if (option.equals("7")){
+            employee_ShowAllAccounts();
+        }
+    }
+
+    private static void employee_Deposit() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your account number: ");
+        int accountNumber = Integer.parseInt(input.next());
+        System.out.print("Enter the client Id: ");
+        int clientId = Integer.parseInt(input.next());
+        System.out.print("Enter the employee Id: ");
+        int employeeId = Integer.parseInt(input.next());
+        System.out.print("Enter the amount to deposit: ");
+        long amount = Integer.parseInt(input.next());
+        input.close();
+        StringBuilder errorMessage = new StringBuilder();
+
+        if(_transactionManager.deposit(accountNumber, clientId, employeeId, amount, errorMessage)){
+            System.out.println("The transaction was successful");
+            return;
+        }
+        else {
+            System.out.println(errorMessage);
+            return;
+        }
+    }
+
+    private static void employee_Withdraw() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter account number: ");
+        int accountNumber = Integer.parseInt(input.next());
+        System.out.print("Enter the client Id: ");
+        int clientId = Integer.parseInt(input.next());
+        System.out.print("Enter the employee Id: ");
+        int employeeId = Integer.parseInt(input.next());
+        System.out.print("Enter the amount to withdraw: ");
+        long amount = Integer.parseInt(input.next());
+        input.close();
+        StringBuilder errorMessage = new StringBuilder();
+
+        if(_transactionManager.withdraw(accountNumber, clientId, employeeId, amount, errorMessage)){
+            System.out.println("The transaction was successful");
+            return;
+        }
+        else {
+            System.out.println(errorMessage);
+            return;
+        }
+    }
+
+    private static void employee_Transfer() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the source account number: ");
+        int sourceAccountNumber = Integer.parseInt(input.next());
+        System.out.print("Enter the target account number: ");
+        int targetAccountNumber = Integer.parseInt(input.next());
+        System.out.print("Enter the client Id: ");
+        int clientId = Integer.parseInt(input.next());
+        System.out.print("Enter the employee Id: ");
+        int employeeId = Integer.parseInt(input.next());
+        System.out.print("Enter the amount to withdraw: ");
+        long amount = Integer.parseInt(input.next());
+        input.close();
+        StringBuilder errorMessage = new StringBuilder();
+
+        if(_transactionManager.transfer(sourceAccountNumber, targetAccountNumber, clientId, employeeId, amount, errorMessage)){
+            System.out.println("The transaction was successful");
+            return;
+        }
+        else {
+            System.out.println(errorMessage);
+            return;
+        }
+    }
+
+    private static void employee_FindClient() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.println("1. Find by national code");
+        System.out.println("2. Find by Id");
+        String option = input.next();
+
+        if (option.equals("1")) {
+            System.out.print("National code: ");
+            String findClientNationalCode = input.next();
+            if (_clientManager.findByNationalCode(findClientNationalCode) != null) {
+                System.out.print(_clientManager.findByNationalCode(findClientNationalCode).toString());
+            } else {
+                System.out.println("Cannot find the entered national code");
+            }
+        }
+        if (option.equals("2")) {
+            System.out.print("Id");
+            int findClientId = Integer.parseInt(input.next());
+            if (_clientManager.find(findClientId) != null) {
+                System.out.print(_clientManager.find(findClientId).toString());
+            } else {
+                System.out.println("Cannot find the entered Id");
+            }
+        }
+
+        input.close();
+
+    }
+
+    private static void employee_ShowAllClients() {
+        ArrayList<Client> clients = _clientManager.getAll();
+
+        int index = 1;
+        for(Client item : clients){
+            System.out.print(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
+
+    }
+
+    private static void employee_FindAccount() {
+        clearScreen();
+        Scanner input = new Scanner(System.in);
+        System.out.println("1. Find by account number");
+        System.out.println("2. Find by Id");
+        String option = input.next();
+
+        if (option.equals("1")) {
+            System.out.print("Enter account number: ");
+            int accountNumber = Integer.parseInt(input.next());
+        }
+        if (option.equals("2")) {
+            System.out.print("Id");
+            int findClientId = Integer.parseInt(input.next());
+            if (_clientManager.find(findClientId) != null) {
+                System.out.print(_clientManager.find(findClientId).toString());
+            } else {
+                System.out.println("Cannot find the entered Id");
+            }
+        }
+
+        input.close();
+    }
+
+    private static void employee_ShowAllAccounts() {
+        ArrayList<Account> accounts = _accountManager.getAll();
+
+        int index = 0;
+        for(Account item : accounts){
+            System.out.print(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,11 +371,23 @@ public class Main {
     }
 
     private static void manager_ShowAllTransactions() {
+        ArrayList<Transaction> transactions = _transactionManager.getAll();
 
+        int index = 1;
+        for(Transaction item : transactions){
+            System.out.print(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
     }
 
     private static void manager_ShowAllClients() {
+        ArrayList<Client> clients = _clientManager.getAll();
 
+        int index = 1;
+        for(Client item : clients){
+            System.out.print(String.format("%d. %s", index, item.toString()));
+            index++;
+        }
     }
 
     private static void manager_ShowAllEmployees() {
